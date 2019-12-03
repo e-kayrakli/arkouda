@@ -31,7 +31,7 @@ module EfuncMsg
 
     proc efuncMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var efunc = fields[2];
@@ -150,7 +150,7 @@ module EfuncMsg
     */
     proc efunc3vvMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var efunc = fields[2];
@@ -222,7 +222,7 @@ module EfuncMsg
     */
     proc efunc3vsMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var efunc = fields[2];
@@ -294,7 +294,7 @@ module EfuncMsg
     */
     proc efunc3svMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var efunc = fields[2];
@@ -366,7 +366,7 @@ module EfuncMsg
     */
     proc efunc3ssMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var efunc = fields[2];

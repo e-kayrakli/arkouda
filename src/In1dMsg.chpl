@@ -29,7 +29,7 @@ module In1dMsg
     */
     proc in1dMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var name = fields[2];

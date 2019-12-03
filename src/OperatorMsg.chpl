@@ -26,7 +26,7 @@ module OperatorMsg
     */
     proc binopvvMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var op = fields[2];
@@ -435,7 +435,7 @@ module OperatorMsg
     */
     proc binopvsMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string = ""; // response message
+        var repMsg: bytes = ""; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var op = fields[2];
@@ -825,7 +825,7 @@ module OperatorMsg
     */
     proc binopsvMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string = ""; // response message
+        var repMsg: bytes = ""; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var op = fields[2];
@@ -1215,7 +1215,7 @@ module OperatorMsg
     */
     proc opeqvvMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var op = fields[2];
@@ -1351,7 +1351,7 @@ module OperatorMsg
     */
     proc opeqvsMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var op = fields[2];

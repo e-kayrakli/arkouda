@@ -16,7 +16,7 @@ module HistogramMsg
     /* histogram takes a pdarray and returns a pdarray with the histogram in it */
     proc histogramMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var name = fields[2];

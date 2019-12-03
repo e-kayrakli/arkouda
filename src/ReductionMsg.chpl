@@ -24,7 +24,7 @@ module ReductionMsg
     // scalar = reductionop(vector)
     proc reductionMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var reductionop = fields[2];

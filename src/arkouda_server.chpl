@@ -54,7 +54,7 @@ proc main() {
             break;
         }
 
-        var repMsg: string;
+        var repMsg: bytes;
         
         // peel off the command
         var fields = reqMsg.split(1);

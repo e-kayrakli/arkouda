@@ -17,7 +17,7 @@ module ConcatenateMsg
      */
     proc concatenateMsg(reqMsg: bytes, st: borrowed SymTab) throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string;
+        var repMsg: bytes;
         var fields = reqMsg.split();
         var cmd = fields[1];
         var n = try! fields[2]:int; // number of arrays to sort

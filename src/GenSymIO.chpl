@@ -9,7 +9,7 @@ module GenSymIO {
   config const GenSymIO_DEBUG = false;
 
   proc arrayMsg(reqMsg: bytes, st: borrowed SymTab): bytes {
-    var repMsg: string;
+    var repMsg: bytes;
     var fields = reqMsg.split(3);
     var cmd = fields[1];
     var dtype = str2dtype(fields[2]);
@@ -121,7 +121,7 @@ module GenSymIO {
     // reqMsg: "lshdf [<json_filename>]"
     use Spawn;
     const tmpfile = "/tmp/arkouda.lshdf.output";
-    var repMsg: string;
+    var repMsg: bytes;
     var fields = reqMsg.split(1);
     var cmd = fields[1];
     var jsonfile = fields[2];
@@ -168,7 +168,7 @@ module GenSymIO {
   }
   
   proc readhdfMsg(reqMsg: bytes, st: borrowed SymTab): bytes {
-    var repMsg: string;
+    var repMsg: bytes;
     // reqMsg = "readhdf <dsetName> <nfiles> [<json_filenames>]"
     var fields = reqMsg.split(3);
     var cmd = fields[1];

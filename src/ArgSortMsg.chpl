@@ -411,7 +411,7 @@ module ArgSortMsg
      */
     proc coargsortMsg(reqMsg: bytes, st: borrowed SymTab) throws {
       param pn = Reflection.getRoutineName();
-      var repMsg: string;
+      var repMsg: bytes;
       var fields = reqMsg.split();
       var cmd = fields[1];
       var n = try! fields[2]:int; // number of arrays to sort
@@ -469,7 +469,7 @@ module ArgSortMsg
     /* argsort takes pdarray and returns an index vector iv which sorts the array */
     proc argsortMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var name = fields[2];
@@ -504,7 +504,7 @@ module ArgSortMsg
     /* localArgsort takes a pdarray and returns an index vector which sorts the array on a per-locale basis */
     proc localArgsortMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var name = fields[2];

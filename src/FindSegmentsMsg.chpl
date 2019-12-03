@@ -28,7 +28,7 @@ module FindSegmentsMsg
     */
     proc findSegmentsMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
 	var pname = fields[2]; // permutation array
@@ -100,7 +100,7 @@ module FindSegmentsMsg
 
     proc findLocalSegmentsMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
-        var repMsg: string; // response message
+        var repMsg: bytes; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         var kname = fields[2]; // key array
