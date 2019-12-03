@@ -67,7 +67,7 @@ module GenSymIO {
   }
 
   proc tondarrayMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
-    var arraystr: string;
+    var arraystr: bytes;
     var fields = reqMsg.split();
     var entry = st.lookup(fields[2]);
     var tmpf: file;
@@ -90,7 +90,7 @@ module GenSymIO {
     }
     try {
       var tmpr = tmpf.reader(kind=iobig, start=0);
-      tmpr.readstring(arraystr);
+      tmpr.readbytes(arraystr);
       tmpr.close();
       tmpf.close();
     } catch {
@@ -152,7 +152,7 @@ module GenSymIO {
       exitCode = sub.exit_status;
       var f = open(tmpfile, iomode.r);
       var r = f.reader(start=0);
-      r.readstring(repMsg);
+      r.readbytes(repMsg);
       r.close();
       f.close();
       remove(tmpfile);

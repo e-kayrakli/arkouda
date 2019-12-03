@@ -61,7 +61,7 @@ proc main() {
         var cmd = fields[1];
         
         if v {
-            if cmd == "array" { // has binary data in it's payload
+            if cmd == b"array" { // has binary data in it's payload
                 writeln("reqMsg: ", cmd, " <binary-data>");
             }
             else {
@@ -76,60 +76,60 @@ proc main() {
             // parse requests, execute requests, format responses
             select cmd
             {
-                when "lshdf"             {repMsg = lshdfMsg(reqMsg, st);}
-                when "readhdf"           {repMsg = readhdfMsg(reqMsg, st);}
-                when "tohdf"             {repMsg = tohdfMsg(reqMsg, st);}
-                when "array"             {repMsg = arrayMsg(reqMsg, st);}
-                when "create"            {repMsg = createMsg(reqMsg, st);}
-                when "delete"            {repMsg = deleteMsg(reqMsg, st);}
-                when "binopvv"           {repMsg = binopvvMsg(reqMsg, st);}
-                when "binopvs"           {repMsg = binopvsMsg(reqMsg, st);}
-                when "binopsv"           {repMsg = binopsvMsg(reqMsg, st);}
-                when "opeqvv"            {repMsg = opeqvvMsg(reqMsg, st);}
-                when "opeqvs"            {repMsg = opeqvsMsg(reqMsg, st);}
-                when "efunc"             {repMsg = efuncMsg(reqMsg, st);}
-                when "efunc3vv"          {repMsg = efunc3vvMsg(reqMsg, st);}
-                when "efunc3vs"          {repMsg = efunc3vsMsg(reqMsg, st);}
-                when "efunc3sv"          {repMsg = efunc3svMsg(reqMsg, st);}
-                when "efunc3ss"          {repMsg = efunc3ssMsg(reqMsg, st);}
-                when "reduction"         {repMsg = reductionMsg(reqMsg, st);}
-                when "countReduction"    {repMsg = countReductionMsg(reqMsg, st);}
-                when "countLocalRdx"     {repMsg = countLocalRdxMsg(reqMsg, st);}
-                when "findSegments"      {repMsg = findSegmentsMsg(reqMsg, st);}
-                when "findLocalSegments" {repMsg = findLocalSegmentsMsg(reqMsg, st);}
-                when "segmentedReduction"{repMsg = segmentedReductionMsg(reqMsg, st);}
-                when "segmentedLocalRdx" {repMsg = segmentedLocalRdxMsg(reqMsg, st);}
-                when "arange"            {repMsg = arangeMsg(reqMsg, st);}
-                when "linspace"          {repMsg = linspaceMsg(reqMsg, st);}
-                when "randint"           {repMsg = randintMsg(reqMsg, st);}
-                when "histogram"         {repMsg = histogramMsg(reqMsg, st);}
-                when "in1d"              {repMsg = in1dMsg(reqMsg, st);}
-                when "unique"            {repMsg = uniqueMsg(reqMsg, st);}
-                when "value_counts"      {repMsg = value_countsMsg(reqMsg, st);}
-                when "set"               {repMsg = setMsg(reqMsg, st);}
-                when "info"              {repMsg = infoMsg(reqMsg, st);}
-                when "str"               {repMsg = strMsg(reqMsg, st);}
-                when "repr"              {repMsg = reprMsg(reqMsg, st);}
-                when "tondarray"         {repMsg = tondarrayMsg(reqMsg, st);}
-                when "[int]"             {repMsg = intIndexMsg(reqMsg, st);}
-                when "[slice]"           {repMsg = sliceIndexMsg(reqMsg, st);}
-                when "[pdarray]"         {repMsg = pdarrayIndexMsg(reqMsg, st);}
-                when "[int]=val"         {repMsg = setIntIndexToValueMsg(reqMsg, st);}
-                when "[pdarray]=val"     {repMsg = setPdarrayIndexToValueMsg(reqMsg, st);}            
-                when "[pdarray]=pdarray" {repMsg = setPdarrayIndexToPdarrayMsg(reqMsg, st);}            
-                when "[slice]=val"       {repMsg = setSliceIndexToValueMsg(reqMsg, st);}            
-                when "[slice]=pdarray"   {repMsg = setSliceIndexToPdarrayMsg(reqMsg, st);}
-                when "argsort"           {repMsg = argsortMsg(reqMsg, st);}
-                when "coargsort"         {repMsg = coargsortMsg(reqMsg, st);}
-                when "concatenate"       {repMsg = concatenateMsg(reqMsg, st);}
-                when "localArgsort"      {repMsg = localArgsortMsg(reqMsg, st);}
-                when "sort"              {repMsg = sortMsg(reqMsg, st);}
-                when "getconfig"         {repMsg = getconfigMsg(reqMsg, st);}
-                when "getmemused"        {repMsg = getmemusedMsg(reqMsg, st);}
-                when "connect" {
+                when b"lshdf"             {repMsg = lshdfMsg(reqMsg, st);}
+                when b"readhdf"           {repMsg = readhdfMsg(reqMsg, st);}
+                when b"tohdf"             {repMsg = tohdfMsg(reqMsg, st);}
+                when b"array"             {repMsg = arrayMsg(reqMsg, st);}
+                when b"create"            {repMsg = createMsg(reqMsg, st);}
+                when b"delete"            {repMsg = deleteMsg(reqMsg, st);}
+                when b"binopvv"           {repMsg = binopvvMsg(reqMsg, st);}
+                when b"binopvs"           {repMsg = binopvsMsg(reqMsg, st);}
+                when b"binopsv"           {repMsg = binopsvMsg(reqMsg, st);}
+                when b"opeqvv"            {repMsg = opeqvvMsg(reqMsg, st);}
+                when b"opeqvs"            {repMsg = opeqvsMsg(reqMsg, st);}
+                when b"efunc"             {repMsg = efuncMsg(reqMsg, st);}
+                when b"efunc3vv"          {repMsg = efunc3vvMsg(reqMsg, st);}
+                when b"efunc3vs"          {repMsg = efunc3vsMsg(reqMsg, st);}
+                when b"efunc3sv"          {repMsg = efunc3svMsg(reqMsg, st);}
+                when b"efunc3ss"          {repMsg = efunc3ssMsg(reqMsg, st);}
+                when b"reduction"         {repMsg = reductionMsg(reqMsg, st);}
+                when b"countReduction"    {repMsg = countReductionMsg(reqMsg, st);}
+                when b"countLocalRdx"     {repMsg = countLocalRdxMsg(reqMsg, st);}
+                when b"findSegments"      {repMsg = findSegmentsMsg(reqMsg, st);}
+                when b"findLocalSegments" {repMsg = findLocalSegmentsMsg(reqMsg, st);}
+                when b"segmentedReduction"{repMsg = segmentedReductionMsg(reqMsg, st);}
+                when b"segmentedLocalRdx" {repMsg = segmentedLocalRdxMsg(reqMsg, st);}
+                when b"arange"            {repMsg = arangeMsg(reqMsg, st);}
+                when b"linspace"          {repMsg = linspaceMsg(reqMsg, st);}
+                when b"randint"           {repMsg = randintMsg(reqMsg, st);}
+                when b"histogram"         {repMsg = histogramMsg(reqMsg, st);}
+                when b"in1d"              {repMsg = in1dMsg(reqMsg, st);}
+                when b"unique"            {repMsg = uniqueMsg(reqMsg, st);}
+                when b"value_counts"      {repMsg = value_countsMsg(reqMsg, st);}
+                when b"set"               {repMsg = setMsg(reqMsg, st);}
+                when b"info"              {repMsg = infoMsg(reqMsg, st);}
+                when b"str"               {repMsg = strMsg(reqMsg, st);}
+                when b"repr"              {repMsg = reprMsg(reqMsg, st);}
+                when b"tondarray"         {repMsg = tondarrayMsg(reqMsg, st);}
+                when b"[int]"             {repMsg = intIndexMsg(reqMsg, st);}
+                when b"[slice]"           {repMsg = sliceIndexMsg(reqMsg, st);}
+                when b"[pdarray]"         {repMsg = pdarrayIndexMsg(reqMsg, st);}
+                when b"[int]=val"         {repMsg = setIntIndexToValueMsg(reqMsg, st);}
+                when b"[pdarray]=val"     {repMsg = setPdarrayIndexToValueMsg(reqMsg, st);}            
+                when b"[pdarray]=pdarray" {repMsg = setPdarrayIndexToPdarrayMsg(reqMsg, st);}            
+                when b"[slice]=val"       {repMsg = setSliceIndexToValueMsg(reqMsg, st);}            
+                when b"[slice]=pdarray"   {repMsg = setSliceIndexToPdarrayMsg(reqMsg, st);}
+                when b"argsort"           {repMsg = argsortMsg(reqMsg, st);}
+                when b"coargsort"         {repMsg = coargsortMsg(reqMsg, st);}
+                when b"concatenate"       {repMsg = concatenateMsg(reqMsg, st);}
+                when b"localArgsort"      {repMsg = localArgsortMsg(reqMsg, st);}
+                when b"sort"              {repMsg = sortMsg(reqMsg, st);}
+                when b"getconfig"         {repMsg = getconfigMsg(reqMsg, st);}
+                when b"getmemused"        {repMsg = getmemusedMsg(reqMsg, st);}
+                when b"connect" {
                     repMsg = "connected to arkouda server tcp://*:%t".format(ServerPort);
                 }
-                when "disconnect" {
+                when b"disconnect" {
                     repMsg = "disconnected from arkouda server tcp://*:%t".format(ServerPort);
                 }
                 otherwise {
@@ -147,7 +147,7 @@ proc main() {
         // send count for now
         repCount += 1;
         if v {
-	  if cmd == "tondarray" {
+	  if cmd == b"tondarray" {
               writeln("repMsg:"," <binary-data>");
 	  } else {
 	    writeln("repMsg:",repMsg);
