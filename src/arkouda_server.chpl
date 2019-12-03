@@ -37,7 +37,7 @@ proc main() {
     var repCount: int = 0;
     while !shutdownServer {
         // receive requests
-        var reqMsg = socket.recv(string);
+        var reqMsg = socket.recv(bytes);
 
         // start timer for command processing
         var t1 = Time.getCurrentTime();
@@ -45,7 +45,7 @@ proc main() {
         reqCount += 1;
 
         // shutdown server
-        if reqMsg == "shutdown" {
+        if reqMsg == b"shutdown" {
             if v {writeln("reqMsg: ", reqMsg); try! stdout.flush();}
             shutdownServer = true;
             repCount += 1;
