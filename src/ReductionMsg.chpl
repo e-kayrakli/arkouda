@@ -205,7 +205,7 @@ module ReductionMsg
 
       var gSeg: borrowed GenSymEntry = st.lookup(segments_name);
       var segments = toSymEntry(gSeg, int);
-      if (segments == nil) {return "Error: array of segment offsets must be int dtype";}
+      if (segments == nil) {return ("Error: array of segment offsets must be int dtype"):bytes;}
       var counts = segCount(segments.a, size);
       st.addEntry(rname, new shared SymEntry(counts));
       return try! "created " + st.attrib(rname);
@@ -239,7 +239,7 @@ module ReductionMsg
 
       var gSeg: borrowed GenSymEntry = st.lookup(segments_name);
       var segments = toSymEntry(gSeg, int);
-      if (segments == nil) {return "Error: array of segment offsets must be int dtype";}
+      if (segments == nil) {return ("Error: array of segment offsets must be int dtype"):bytes;}
       var counts = perLocCount(segments.a, size);
       st.addEntry(rname, new shared SymEntry(counts));
       return try! "created " + st.attrib(rname);
@@ -274,7 +274,7 @@ module ReductionMsg
       var gVal: borrowed GenSymEntry = st.lookup(values_name);
       var gSeg: borrowed GenSymEntry = st.lookup(segments_name);
       var segments = toSymEntry(gSeg, int);
-      if (segments == nil) {return "Error: array of segment offsets must be int dtype";}
+      if (segments == nil) {return ("Error: array of segment offsets must be int dtype"):bytes;}
       select (gVal.dtype) {
       when (DType.Int64) {
 	var values = toSymEntry(gVal, int);
@@ -393,7 +393,7 @@ module ReductionMsg
       var gVal: borrowed GenSymEntry = st.lookup(values_name);
       var gSeg: borrowed GenSymEntry = st.lookup(segments_name);
       var segments = toSymEntry(gSeg, int);
-      if (segments == nil) {return "Error: array of segment offsets must be int dtype";}
+      if (segments == nil) {return ("Error: array of segment offsets must be int dtype"):bytes;}
       select (gVal.dtype) {
       when (DType.Int64) {
 	var values = toSymEntry(gVal, int);

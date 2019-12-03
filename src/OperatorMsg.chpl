@@ -131,7 +131,7 @@ module OperatorMsg
                     when "**" { 
                         if || reduce (r.a<0){
                             //instead of error, could we paste the below code but of type float?
-                            return "Error: Attempt to exponentiate base of type Int64 to negative exponent";
+                            return ("Error: Attempt to exponentiate base of type Int64 to negative exponent"):bytes;
                         }
                         var e = st.addEntry(rname, l.size, int);
                         e.a= l.a**r.a;
@@ -527,7 +527,7 @@ module OperatorMsg
                     }
                     when "**" { 
                         if (val<0){
-                            return "Error: Attempt to exponentiate base of type Int64 to negative exponent";
+                            return ("Error: Attempt to exponentiate base of type Int64 to negative exponent"):bytes;
                         }
                         var e = st.addEntry(rname, l.size, int);
                         e.a= l.a**val;
@@ -917,7 +917,7 @@ module OperatorMsg
                     }
                     when "**" { 
                         if || reduce (r.a<0){
-                            return "Error: Attempt to exponentiate base of type Int64 to negative exponent";
+                            return ("Error: Attempt to exponentiate base of type Int64 to negative exponent"):bytes;
                         }
                         var e = st.addEntry(rname, r.size, int);
                         e.a= val**r.a;
@@ -1248,7 +1248,7 @@ module OperatorMsg
                     }
                     when "**=" { 
                         if || reduce (r.a<0){
-                            return "Error: Attempt to exponentiate base of type Int64 to negative exponent";
+                            return ("Error: Attempt to exponentiate base of type Int64 to negative exponent"):bytes;
                         }
                         else{ l.a **= r.a; }
                     }
@@ -1379,7 +1379,7 @@ module OperatorMsg
                     }
                     when "**=" { 
                         if (val<0){
-                            return "Error: Attempt to exponentiate base of type Int64 to negative exponent";
+                            return ("Error: Attempt to exponentiate base of type Int64 to negative exponent"):bytes;
                         }
                         else{ l.a **= val; }
 

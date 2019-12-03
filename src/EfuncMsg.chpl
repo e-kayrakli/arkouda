@@ -164,7 +164,7 @@ module EfuncMsg
 	var g2: borrowed GenSymEntry = st.lookup(name2);
 	var g3: borrowed GenSymEntry = st.lookup(name3);
 	if !((g1.size == g2.size) && (g2.size == g3.size)) {
-	  return "Error: size mismatch in arguments to "+pn;
+	  return ("Error: size mismatch in arguments to "+pn):bytes;
 	}
         select (g1.dtype, g2.dtype, g3.dtype) {
 	when (DType.Bool, DType.Int64, DType.Int64) {
@@ -236,7 +236,7 @@ module EfuncMsg
         var g1: borrowed GenSymEntry = st.lookup(name1);
 	var g2: borrowed GenSymEntry = st.lookup(name2);
 	if !(g1.size == g2.size) {
-	  return "Error: size mismatch in arguments to "+pn;
+	  return ("Error: size mismatch in arguments to "+pn):bytes;
 	}
         select (g1.dtype, g2.dtype, dtype) {
 	when (DType.Bool, DType.Int64, DType.Int64) {
@@ -308,7 +308,7 @@ module EfuncMsg
         var g1: borrowed GenSymEntry = st.lookup(name1);
 	var g2: borrowed GenSymEntry = st.lookup(name2);
 	if !(g1.size == g2.size) {
-	  return "Error: size mismatch in arguments to "+pn;
+	  return ("Error: size mismatch in arguments to "+pn):bytes;
 	}
         select (g1.dtype, dtype, g2.dtype) {
 	when (DType.Bool, DType.Int64, DType.Int64) {

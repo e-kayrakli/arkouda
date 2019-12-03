@@ -22,17 +22,17 @@ module GenSymIO {
       tmpw.write(data);
       try! tmpw.close();
     } catch {
-      return "Error: Could not write to memory buffer";
+      return ("Error: Could not write to memory buffer"):bytes;
     }
     try {
       const entry: shared GenSymEntry = readEntry();
       const rname = st.nextName();
       st.addEntry(rname, entry);
-      return try! "created " + st.attrib(rname);
+      return try! ("created " + st.attrib(rname)):bytes;
     } catch err: UnhandledDataTypeError {
-      return try! "Error: Unhandled data type %s".format(err.dtype);
+      return try! ("Error: Unhandled data type %s".format(err.dtype)):bytes;
     } catch {
-      return "Error: Could not read from memory buffer into SymEntry";
+      return ("Error: Could not read from memory buffer into SymEntry"):bytes;
     }
 
     class UnhandledDataTypeError: Error {
@@ -81,12 +81,12 @@ module GenSymIO {
       } else if entry.dtype == DType.Bool {
 	tmpw.write(toSymEntry(entry, bool).a);
       } else {
-	return try! "Error: Unhandled dtype %s".format(entry.dtype);
+	return try! ("Error: Unhandled dtype %s".format(entry.dtype)):bytes;
       }
       tmpw.close();
     } catch {
       try! tmpf.close();
-      return "Error: Unable to write SymEntry to memory buffer";
+      return ("Error: Unable to write SymEntry to memory buffer"):bytes;
     }
     try {
       var tmpr = tmpf.reader(kind=iobig, start=0);
@@ -94,7 +94,7 @@ module GenSymIO {
       tmpr.close();
       tmpf.close();
     } catch {
-      return "Error: Unable to copy array from memory buffer to string";
+      return ("Error: Unable to copy array from memory buffer to string"):bytes;
     }
     //var repMsg = try! "Array: %i".format(arraystr.length) + arraystr;
     return arraystr;
@@ -129,7 +129,7 @@ module GenSymIO {
     try {
       filename = decode_json(jsonfile, 1)[0];
     } catch {
-      return try! "Error: could not decode json filenames via tempfile (%i files: %s)".format(1, jsonfile);
+      return try! ("Error: could not decode json filenames via tempfile (%i files: %s)".format(1, jsonfile)):bytes;
     }
     // Attempt to interpret filename as a glob expression and ls the first result
     var tmp = glob(filename);
@@ -137,7 +137,7 @@ module GenSymIO {
       writeln(try! "glob expanded %s to %i files".format(filename, tmp.size));
     }
     if tmp.size <= 0 {
-      return try! "Error: no files matching %s".format(filename);
+      return try! ("Error: no files matching %s".format(filename)):bytes;
     }
     filename = tmp[tmp.domain.first];
     var exitCode: int;
@@ -157,11 +157,11 @@ module GenSymIO {
       f.close();
       remove(tmpfile);
     } catch {
-      return "Error: failed to spawn process and read output";
+      return ("Error: failed to spawn process and read output"):bytes;
     }
     
     if exitCode != 0 {
-      return try! "Error: %s".format(repMsg);
+      return try! ("Error: %s".format(repMsg)):bytes;
     } else {
       return repMsg;
     }
@@ -172,14 +172,14 @@ module GenSymIO {
     // reqMsg = "readhdf <dsetName> <nfiles> [<json_filenames>]"
     var fields = reqMsg.split(3);
     var cmd = fields[1];
-    var dsetName = fields[2];
+    var dsetName = try! fields[2].decode();
     var nfiles = try! fields[3]:int;
     var jsonfiles = fields[4];
     var filelist: [0..#nfiles] string;
     try {
       filelist = decode_json(jsonfiles, nfiles);
     } catch {
-      return try! "Error: could not decode json filenames via tempfile (%i files: %s)".format(nfiles, jsonfiles);
+      return try! ("Error: could not decode json filenames via tempfile (%i files: %s)".format(nfiles, jsonfiles)):bytes;
     }
     var filedom = filelist.domain;
     var filenames: [filedom] string;
@@ -189,7 +189,7 @@ module GenSymIO {
 	writeln(try! "glob expanded %s to %i files".format(filelist[0], tmp.size));
       }
       if tmp.size == 0 {
-	return try! "Error: no files matching %s".format(filelist[0]);
+	return try! ("Error: no files matching %s".format(filelist[0])):bytes;
       }
       // Glob returns filenames in weird order. Sort for consistency
       // sort(tmp);
@@ -203,22 +203,22 @@ module GenSymIO {
       try {
 	dclasses[i] = get_dtype(fname, dsetName);
       } catch e: FileNotFoundError {
-	return try! "Error: file not found: %s".format(fname);
+	return try! ("Error: file not found: %s".format(fname)):bytes;
       } catch e: PermissionError {
-	return try! "Error: permission error on %s".format(fname);
+	return try! ("Error: permission error on %s".format(fname)):bytes;
       } catch e: DatasetNotFoundError {
-	return try! "Error: dataset %s not found in file %s".format(dsetName, fname);
+	return try! ("Error: dataset %s not found in file %s".format(dsetName, fname)):bytes;
       } catch e: NotHDF5FileError {
-	return try! "Error: cannot open as HDF5 file %s".format(fname);
+	return try! ("Error: cannot open as HDF5 file %s".format(fname)):bytes;
       } catch {
 	// Need a catch-all for non-throwing function
-	return try! "Error: unknown cause";
+	return try! ("Error: unknown cause"):bytes;
       }
     }
     const dataclass = dclasses[dclasses.domain.first];
     for (i, dc) in zip(dclasses.domain, dclasses) {
       if dc != dataclass {
-	return try! "Error: inconsistent dtype in dataset %s of file %s".format(dsetName, filenames[i]);
+	return try! ("Error: inconsistent dtype in dataset %s of file %s".format(dsetName, filenames[i])):bytes;
       }
     }
     if GenSymIO_DEBUG {
@@ -231,7 +231,7 @@ module GenSymIO {
     } catch e: HDF5RankError {
       return notImplementedError("readhdf", try! "Rank %i arrays".format(e.rank));
     } catch {
-      return try! "Error: unknown cause";
+      return try! ("Error: unknown cause"):bytes;
     }
     if GenSymIO_DEBUG {
       writeln("Got subdomains and total length");
@@ -242,7 +242,7 @@ module GenSymIO {
     st.addEntry(rname, entry);
     return try! "created " + st.attrib(rname);
     } catch e: UnhandledHDFSDataTypeError {
-      return try! "Error: detected unhandled datatype code %i".format(dataclass);
+      return try! ("Error: detected unhandled datatype code %i".format(dataclass)):bytes;
     } catch {
       return "Unexpected error";
     }
@@ -432,7 +432,7 @@ module GenSymIO {
     try {
       filename = decode_json(jsonfile, 1)[0];
     } catch {
-      return try! "Error: could not decode json filenames via tempfile (%i files: %s)".format(1, jsonfile);
+      return try! ("Error: could not decode json filenames via tempfile (%i files: %s)".format(1, jsonfile)):bytes;
     }
     var entry = st.lookup(arrayName);
     var warnFlag: bool;
@@ -456,11 +456,11 @@ module GenSymIO {
       }
     }
     } catch e: FileNotFoundError {
-      return try! "Error: unable to open file for writing: %s".format(filename);
+      return try! ("Error: unable to open file for writing: %s".format(filename)):bytes;
     } catch e: MismatchedAppendError {
-      return "Error: appending to existing files must be done with the same number of locales. Try saving with a different directory or filename prefix?";
+      return ("Error: appending to existing files must be done with the same number of locales. Try saving with a different directory or filename prefix?"):bytes;
     } catch {
-      return "Error: problem writing to file";
+      return ("Error: problem writing to file"):bytes;
     }
     if warnFlag {
       return "Warning: possibly overwriting existing files matching filename pattern";

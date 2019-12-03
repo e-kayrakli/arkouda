@@ -37,7 +37,7 @@ module In1dMsg
         var invert: bool;
         if fields[4] == "True" {invert = true;}
         else if fields[4] == "False" {invert = false;}
-        else {return try! "Error: %s: %s".format(pn,fields[4]);}
+        else {return try! ("Error: %s: %s".format(pn,fields[4])):bytes;}
 
         // get next symbol name
         var rname = st.nextName();
@@ -73,7 +73,7 @@ module In1dMsg
                     st.addEntry(rname, new shared SymEntry(truth));
                 }
                 // error if above medium bound
-                else {return try! "Error: %s: ar2 size too large %t".format(pn,ar2.size);}
+                else {return try! ("Error: %s: ar2 size too large %t".format(pn,ar2.size)):bytes;}
                 
             }
             otherwise {return notImplementedError(pn,gAr1.dtype,"in",gAr2.dtype);}

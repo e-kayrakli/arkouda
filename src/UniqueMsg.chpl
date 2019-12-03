@@ -35,7 +35,7 @@ module UniqueMsg
         var returnCounts: bool;
         if fields[3] == "True" {returnCounts = true;}
         else if fields[3] == "False" {returnCounts = false;}
-        else {return try! "Error: %s: %s".format(pn,fields[3]);}
+        else {return try! ("Error: %s: %s".format(pn,fields[3])):bytes;}
         
         // get next symbol name for unique
         var vname = st.nextName();
