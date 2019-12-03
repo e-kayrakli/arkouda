@@ -467,7 +467,7 @@ module ArgSortMsg
     }
     
     /* argsort takes pdarray and returns an index vector iv which sorts the array */
-    proc argsortMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+    proc argsortMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -502,7 +502,7 @@ module ArgSortMsg
     }
 
     /* localArgsort takes a pdarray and returns an index vector which sorts the array on a per-locale basis */
-    proc localArgsortMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+    proc localArgsortMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

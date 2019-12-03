@@ -26,7 +26,7 @@ module FindSegmentsMsg
     :throws: `UndefinedSymbolError(name)`
 
     */
-    proc findSegmentsMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+    proc findSegmentsMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -98,7 +98,7 @@ module FindSegmentsMsg
 	return try! "created " + st.attrib(sname) + " +created " + st.attrib(uname);
     }
 
-    proc findLocalSegmentsMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+    proc findLocalSegmentsMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

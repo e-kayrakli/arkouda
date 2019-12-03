@@ -8,7 +8,7 @@ module GenSymIO {
   use Sort;
   config const GenSymIO_DEBUG = false;
 
-  proc arrayMsg(reqMsg: bytes, st: borrowed SymTab): string {
+  proc arrayMsg(reqMsg: bytes, st: borrowed SymTab): bytes {
     var repMsg: string;
     var fields = reqMsg.split(3);
     var cmd = fields[1];
@@ -66,7 +66,7 @@ module GenSymIO {
     }
   }
 
-  proc tondarrayMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+  proc tondarrayMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
     var arraystr: string;
     var fields = reqMsg.split();
     var entry = st.lookup(fields[2]);
@@ -104,7 +104,7 @@ module GenSymIO {
   class NotHDF5FileError: Error { proc init() {} }
   class MismatchedAppendError: Error { proc init() {} }
 
-  proc decode_json(json: string, size: int) throws {
+  proc decode_json(json: bytes, size: int) throws {
     var f = opentmp();
     var w = f.writer();
     w.write(json);
@@ -117,7 +117,7 @@ module GenSymIO {
     return array;
   }
 
-  proc lshdfMsg(reqMsg: bytes, st: borrowed SymTab): string {
+  proc lshdfMsg(reqMsg: bytes, st: borrowed SymTab): bytes {
     // reqMsg: "lshdf [<json_filename>]"
     use Spawn;
     const tmpfile = "/tmp/arkouda.lshdf.output";
@@ -167,7 +167,7 @@ module GenSymIO {
     }
   }
   
-  proc readhdfMsg(reqMsg: bytes, st: borrowed SymTab): string {
+  proc readhdfMsg(reqMsg: bytes, st: borrowed SymTab): bytes {
     var repMsg: string;
     // reqMsg = "readhdf <dsetName> <nfiles> [<json_filenames>]"
     var fields = reqMsg.split(3);
@@ -420,7 +420,7 @@ module GenSymIO {
     return {low..high by stride};
   }
 
-  proc tohdfMsg(reqMsg, st: borrowed SymTab): string throws {
+  proc tohdfMsg(reqMsg, st: borrowed SymTab): bytes throws {
     // reqMsg = "tohdf <arrayName> <dsetName> <mode> [<json_filename>]"
     var fields = reqMsg.split(4);
     var cmd = fields[1];

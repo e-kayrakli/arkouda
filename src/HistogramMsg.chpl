@@ -14,7 +14,7 @@ module HistogramMsg
     private config const mBound = 2**25;
 
     /* histogram takes a pdarray and returns a pdarray with the histogram in it */
-    proc histogramMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+    proc histogramMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

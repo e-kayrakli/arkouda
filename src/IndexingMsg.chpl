@@ -11,7 +11,7 @@ module IndexingMsg
     use UnorderedCopy;
 
     /* intIndex "a[int]" response to __getitem__(int) */
-    proc intIndexMsg(reqMsg: bytes, st: borrowed SymTab):string throws {
+    proc intIndexMsg(reqMsg: bytes, st: borrowed SymTab):bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -43,7 +43,7 @@ module IndexingMsg
     }
 
     /* sliceIndex "a[slice]" response to __getitem__(slice) */
-    proc sliceIndexMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+    proc sliceIndexMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -94,7 +94,7 @@ module IndexingMsg
     }
 
     /* pdarrayIndex "a[pdarray]" response to __getitem__(pdarray) */
-    proc pdarrayIndexMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+    proc pdarrayIndexMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -170,7 +170,7 @@ module IndexingMsg
     }
 
     /* setIntIndexToValue "a[int] = value" response to __setitem__(int, value) */
-    proc setIntIndexToValueMsg(reqMsg: bytes, st: borrowed SymTab):string throws {
+    proc setIntIndexToValueMsg(reqMsg: bytes, st: borrowed SymTab):bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -244,7 +244,7 @@ module IndexingMsg
     }
 
     /* setPdarrayIndexToValue "a[pdarray] = value" response to __setitem__(pdarray, value) */
-    proc setPdarrayIndexToValueMsg(reqMsg: bytes, st: borrowed SymTab):string throws {
+    proc setPdarrayIndexToValueMsg(reqMsg: bytes, st: borrowed SymTab):bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -260,7 +260,7 @@ module IndexingMsg
         var gIV: borrowed GenSymEntry = st.lookup(iname);
 
         // scatter indexing by integer index vector
-        proc ivInt64Helper(type Xtype, type dtype): string {
+        proc ivInt64Helper(type Xtype, type dtype): bytes {
             var e = toSymEntry(gX,Xtype);
             var iv = toSymEntry(gIV,int);
             var ivMin = min reduce iv.a;
@@ -280,7 +280,7 @@ module IndexingMsg
         }
 
         // expansion boolean indexing by bool index vector
-        proc ivBoolHelper(type Xtype, type dtype): string throws {
+        proc ivBoolHelper(type Xtype, type dtype): bytes throws {
             var e = toSymEntry(gX,Xtype);
             var truth = toSymEntry(gIV,bool);
             if (e.size != truth.size) {return try! "Error: %s: bool iv must be same size %i != %i".format(pn,e.size,truth.size);}
@@ -321,7 +321,7 @@ module IndexingMsg
     }
 
     /* setPdarrayIndexToPdarray "a[pdarray] = pdarray" response to __setitem__(pdarray, pdarray) */
-    proc setPdarrayIndexToPdarrayMsg(reqMsg: bytes, st: borrowed SymTab):string throws {
+    proc setPdarrayIndexToPdarrayMsg(reqMsg: bytes, st: borrowed SymTab):bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -401,7 +401,7 @@ module IndexingMsg
     }
 
     /* setSliceIndexToValue "a[slice] = value" response to __setitem__(slice, value) */
-    proc setSliceIndexToValueMsg(reqMsg: bytes, st: borrowed SymTab):string throws {
+    proc setSliceIndexToValueMsg(reqMsg: bytes, st: borrowed SymTab):bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -487,7 +487,7 @@ module IndexingMsg
     }
     
     /* setSliceIndexToPdarray "a[slice] = pdarray" response to __setitem__(slice, pdarray) */
-    proc setSliceIndexToPdarrayMsg(reqMsg: bytes, st: borrowed SymTab):string throws {
+    proc setSliceIndexToPdarrayMsg(reqMsg: bytes, st: borrowed SymTab):bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

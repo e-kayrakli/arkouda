@@ -17,7 +17,7 @@ module RandMsg
 
     :arg reqMsg: message to process (contains cmd,aMin,aMax,len,dtype)
     */
-    proc randintMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
+    proc randintMsg(reqMsg: bytes, st: borrowed SymTab): bytes throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
