@@ -27,7 +27,7 @@ module In1dMsg
        in1dMsg processes the request, considers the size of the arguements, and decides which implementation
        of in1d to utilize.
     */
-    proc in1dMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc in1dMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

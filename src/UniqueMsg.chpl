@@ -24,7 +24,7 @@ module UniqueMsg
     use Unique;
     
     /* unique take a pdarray and returns a pdarray with the unique values */
-    proc uniqueMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc uniqueMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -89,7 +89,7 @@ module UniqueMsg
     }
     
     /* value_counts takes a pdarray and returns two pdarrays unique values and counts for each value */
-    proc value_countsMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc value_countsMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

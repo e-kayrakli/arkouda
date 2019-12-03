@@ -24,7 +24,7 @@ module OperatorMsg
     :returns: (string) 
     :throws: `UndefinedSymbolError(name)`
     */
-    proc binopvvMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc binopvvMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -433,7 +433,7 @@ module OperatorMsg
     :returns: (string) 
     :throws: `UndefinedSymbolError(name)`
     */
-    proc binopvsMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc binopvsMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string = ""; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -823,7 +823,7 @@ module OperatorMsg
     :returns: (string) 
     :throws: `UndefinedSymbolError(name)`
     */
-    proc binopsvMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc binopsvMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string = ""; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -1213,7 +1213,7 @@ module OperatorMsg
     :returns: (string) 
     :throws: `UndefinedSymbolError(name)`
     */
-    proc opeqvvMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc opeqvvMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -1349,7 +1349,7 @@ module OperatorMsg
     :throws: `UndefinedSymbolError(name)`
 
     */
-    proc opeqvsMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc opeqvsMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

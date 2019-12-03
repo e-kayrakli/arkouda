@@ -22,7 +22,7 @@ module ReductionMsg
     // these functions take an array and produce a scalar
     // parse and respond to reduction message
     // scalar = reductionop(vector)
-    proc reductionMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc reductionMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -193,7 +193,7 @@ module ReductionMsg
         }
     }
 
-    proc countReductionMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc countReductionMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
       // reqMsg: segmentedReduction values segments operator
       var fields = reqMsg.split();
@@ -226,7 +226,7 @@ module ReductionMsg
       return counts;
     }
     
-    proc countLocalRdxMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc countLocalRdxMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
       // reqMsg: countLocalRdx segments
       // segments.size = numLocales * numKeys
@@ -261,7 +261,7 @@ module ReductionMsg
     }
 
 
-    proc segmentedReductionMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc segmentedReductionMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
       // reqMsg: segmentedReduction values segments operator
       var fields = reqMsg.split();
@@ -375,7 +375,7 @@ module ReductionMsg
       return try! "created " + st.attrib(rname);
     }
 
-    proc segmentedLocalRdxMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc segmentedLocalRdxMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
       // reqMsg: segmentedReduction keys values segments operator
       var fields = reqMsg.split();

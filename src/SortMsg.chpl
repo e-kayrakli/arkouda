@@ -21,7 +21,7 @@ module SortMsg
 
     
     /* sort takes pdarray and returns a sorted copy of the array */
-    proc sortMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc sortMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
       param pn = Reflection.getRoutineName();
       var repMsg: string; // response message
       var fields = reqMsg.split(); // split request into fields

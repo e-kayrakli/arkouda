@@ -29,7 +29,7 @@ module EfuncMsg
       :throws: `UndefinedSymbolError(name)`
       */
 
-    proc efuncMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc efuncMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -148,7 +148,7 @@ module EfuncMsg
     :returns: (string)
     :throws: `UndefinedSymbolError(name)`
     */
-    proc efunc3vvMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc efunc3vvMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -220,7 +220,7 @@ module EfuncMsg
     :returns: (string)
     :throws: `UndefinedSymbolError(name)`
     */
-    proc efunc3vsMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc efunc3vsMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -292,7 +292,7 @@ module EfuncMsg
     :returns: (string)
     :throws: `UndefinedSymbolError(name)`
     */
-    proc efunc3svMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc efunc3svMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -364,7 +364,7 @@ module EfuncMsg
     :returns: (string)
     :throws: `UndefinedSymbolError(name)`
     */
-    proc efunc3ssMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc efunc3ssMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

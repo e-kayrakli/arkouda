@@ -8,7 +8,7 @@ module GenSymIO {
   use Sort;
   config const GenSymIO_DEBUG = false;
 
-  proc arrayMsg(reqMsg: string, st: borrowed SymTab): string {
+  proc arrayMsg(reqMsg: bytes, st: borrowed SymTab): string {
     var repMsg: string;
     var fields = reqMsg.split(3);
     var cmd = fields[1];
@@ -66,7 +66,7 @@ module GenSymIO {
     }
   }
 
-  proc tondarrayMsg(reqMsg: string, st: borrowed SymTab): string throws {
+  proc tondarrayMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
     var arraystr: string;
     var fields = reqMsg.split();
     var entry = st.lookup(fields[2]);
@@ -117,7 +117,7 @@ module GenSymIO {
     return array;
   }
 
-  proc lshdfMsg(reqMsg: string, st: borrowed SymTab): string {
+  proc lshdfMsg(reqMsg: bytes, st: borrowed SymTab): string {
     // reqMsg: "lshdf [<json_filename>]"
     use Spawn;
     const tmpfile = "/tmp/arkouda.lshdf.output";
@@ -167,7 +167,7 @@ module GenSymIO {
     }
   }
   
-  proc readhdfMsg(reqMsg: string, st: borrowed SymTab): string {
+  proc readhdfMsg(reqMsg: bytes, st: borrowed SymTab): string {
     var repMsg: string;
     // reqMsg = "readhdf <dsetName> <nfiles> [<json_filenames>]"
     var fields = reqMsg.split(3);

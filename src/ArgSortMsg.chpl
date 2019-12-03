@@ -409,7 +409,7 @@ module ArgSortMsg
     /* Find the permutation that sorts multiple arrays, treating each array as a
        new level of the sorting key.
      */
-    proc coargsortMsg(reqMsg: string, st: borrowed SymTab) throws {
+    proc coargsortMsg(reqMsg: bytes, st: borrowed SymTab) throws {
       param pn = Reflection.getRoutineName();
       var repMsg: string;
       var fields = reqMsg.split();
@@ -467,7 +467,7 @@ module ArgSortMsg
     }
     
     /* argsort takes pdarray and returns an index vector iv which sorts the array */
-    proc argsortMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc argsortMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
@@ -502,7 +502,7 @@ module ArgSortMsg
     }
 
     /* localArgsort takes a pdarray and returns an index vector which sorts the array on a per-locale basis */
-    proc localArgsortMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc localArgsortMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

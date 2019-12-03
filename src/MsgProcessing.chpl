@@ -37,7 +37,7 @@ module MsgProcessing
 
     :returns: (string) response message
     */
-    proc createMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc createMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -66,7 +66,7 @@ module MsgProcessing
 
     :returns: (string) response message
     */
-    proc deleteMsg(reqMsg: string, st: borrowed SymTab): string {
+    proc deleteMsg(reqMsg: bytes, st: borrowed SymTab): string {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -89,7 +89,7 @@ module MsgProcessing
 
     :returns: (string)
      */
-    proc infoMsg(reqMsg: string, st: borrowed SymTab): string {
+    proc infoMsg(reqMsg: bytes, st: borrowed SymTab): string {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -110,7 +110,7 @@ module MsgProcessing
 
     :returns: (string)
      */
-    proc getconfigMsg(reqMsg: string, st: borrowed SymTab): string {
+    proc getconfigMsg(reqMsg: bytes, st: borrowed SymTab): string {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -129,7 +129,7 @@ module MsgProcessing
 
     :returns: (string)
      */
-    proc getmemusedMsg(reqMsg: string, st: borrowed SymTab): string {
+    proc getmemusedMsg(reqMsg: bytes, st: borrowed SymTab): string {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -148,7 +148,7 @@ module MsgProcessing
 
     :returns: (string)
    */
-    proc strMsg(reqMsg: string, st: borrowed SymTab): string {
+    proc strMsg(reqMsg: bytes, st: borrowed SymTab): string {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -169,7 +169,7 @@ module MsgProcessing
 
        :returns: (string)
       */ 
-    proc reprMsg(reqMsg: string, st: borrowed SymTab): string {
+    proc reprMsg(reqMsg: bytes, st: borrowed SymTab): string {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -191,7 +191,7 @@ module MsgProcessing
 
     :returns: (string)
     */
-    proc arangeMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc arangeMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -230,7 +230,7 @@ module MsgProcessing
 
     :returns: (string)
     */
-    proc linspaceMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc linspaceMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
@@ -272,7 +272,7 @@ module MsgProcessing
     :returns: (string)
     :throws: `UndefinedSymbolError(name)`
     */
-    proc setMsg(reqMsg: string, st: borrowed SymTab): string throws {
+    proc setMsg(reqMsg: bytes, st: borrowed SymTab): string throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string; // response message
         var fields = reqMsg.split(); // split request into fields

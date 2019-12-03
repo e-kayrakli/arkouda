@@ -15,7 +15,7 @@ module ConcatenateMsg
     /* Concatenate a list of arrays together
        to form one array
      */
-    proc concatenateMsg(reqMsg: string, st: borrowed SymTab) throws {
+    proc concatenateMsg(reqMsg: bytes, st: borrowed SymTab) throws {
         param pn = Reflection.getRoutineName();
         var repMsg: string;
         var fields = reqMsg.split();
