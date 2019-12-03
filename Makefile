@@ -13,14 +13,14 @@ default: $(DEFAULT_TARGET)
 VERBOSE ?= 0
 
 CHPL := chpl
-CHPL_DEBUG_FLAGS += --print-passes
+CHPL_DEBUG_FLAGS += --print-passes --print-commands
 ifndef ARKOUDA_DEVELOPER
 CHPL_FLAGS += --fast
 endif
 # need this to avoid a slew of warnings from HDF5 on some platforms
 # --ccflags="-Wno-incompatible-pointer-types"
 CHPL_FLAGS += --ccflags="-Wno-incompatible-pointer-types"
-CHPL_FLAGS += -lhdf5 -lhdf5_hl -lzmq
+CHPL_FLAGS += -lhdf5 -lhdf5_hl -lzmq -lmpi
 
 # --cache-remote does not work with ugni in Chapel 1.20
 COMM = $(shell $(CHPL_HOME)/util/chplenv/chpl_comm.py 2>/dev/null)
