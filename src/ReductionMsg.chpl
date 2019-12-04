@@ -100,7 +100,7 @@ module ReductionMsg
 		      if (& reduce locSorted) {val = "True";} else {val = "False";}
 		      return try! "bool %s".format(val);
 		    }
-                    otherwise {return notImplementedError(pn,reductionop,gEnt.dtype);}
+                    otherwise {return (notImplementedError(pn,reductionop,gEnt.dtype)):bytes;}
                 }
             }
             when (DType.Float64) {
@@ -149,7 +149,7 @@ module ReductionMsg
                         if sorted {val = "True";} else {val = "False";}
                         return try! "bool %s".format(val);
                     }
-                    otherwise {return notImplementedError(pn,reductionop,gEnt.dtype);}
+                    otherwise {return (notImplementedError(pn,reductionop,gEnt.dtype)):bytes;}
                 }
             }
             when (DType.Bool) {
@@ -186,10 +186,10 @@ module ReductionMsg
 			if (| reduce e.a) { val = "True"; } else { val = "False"; }
 			return try! "bool %s".format(val);
 		    }
-                    otherwise {return notImplementedError(pn,reductionop,gEnt.dtype);}
+                    otherwise {return (notImplementedError(pn,reductionop,gEnt.dtype)):bytes;}
                 }
             }
-            otherwise {return unrecognizedTypeError(pn, dtype2str(gEnt.dtype));}
+            otherwise {return (unrecognizedTypeError(pn, dtype2str(gEnt.dtype))):bytes;}
         }
     }
 
@@ -311,7 +311,7 @@ module ReductionMsg
 	    var res = segNumUnique(values.a, segments.a);
 	    st.addEntry(rname, new shared SymEntry(res));
 	  }
-	  otherwise {return notImplementedError(pn,operator,gVal.dtype);}
+	  otherwise {return (notImplementedError(pn,operator,gVal.dtype)):bytes;}
 	  }
       }
       when (DType.Float64) {
@@ -345,7 +345,7 @@ module ReductionMsg
 	    var (vals, locs) = segArgmax(values.a, segments.a);
 	    st.addEntry(rname, new shared SymEntry(locs));
 	  }
-	  otherwise {return notImplementedError(pn,operator,gVal.dtype);}
+	  otherwise {return (notImplementedError(pn,operator,gVal.dtype)):bytes;}
 	  }
       }
       when (DType.Bool) {
@@ -367,10 +367,10 @@ module ReductionMsg
 	    var res = segMean(values.a, segments.a);
 	    st.addEntry(rname, new shared SymEntry(res));
 	  }
-	  otherwise {return notImplementedError(pn,operator,gVal.dtype);}
+	  otherwise {return (notImplementedError(pn,operator,gVal.dtype)):bytes;}
 	  }
       }
-      otherwise {return unrecognizedTypeError(pn, dtype2str(gVal.dtype));}
+      otherwise {return (unrecognizedTypeError(pn, dtype2str(gVal.dtype))):bytes;}
       }
       return try! "created " + st.attrib(rname);
     }
@@ -388,7 +388,7 @@ module ReductionMsg
       if v {try! writeln("%s %s %s %s %s".format(cmd,keys_name,values_name,segments_name,operator));try! stdout.flush();}
 
       var gKey: borrowed GenSymEntry = st.lookup(keys_name);
-      if (gKey.dtype != DType.Int64) {return unrecognizedTypeError(pn, dtype2str(gKey.dtype));}
+      if (gKey.dtype != DType.Int64) {return (unrecognizedTypeError(pn, dtype2str(gKey.dtype))):bytes;}
       var keys = toSymEntry(gKey, int);
       var gVal: borrowed GenSymEntry = st.lookup(values_name);
       var gSeg: borrowed GenSymEntry = st.lookup(segments_name);
@@ -430,7 +430,7 @@ module ReductionMsg
 	    var res = perLocNumUnique(values.a, segments.a);
 	    st.addEntry(rname, new shared SymEntry(res));
 	  }
-	  otherwise {return notImplementedError(pn,operator,gVal.dtype);}
+	  otherwise {return (notImplementedError(pn,operator,gVal.dtype)):bytes;}
 	  }
       }
       when (DType.Float64) {
@@ -464,7 +464,7 @@ module ReductionMsg
 	    var res = perLocArgmax(values.a, segments.a);
 	    st.addEntry(rname, new shared SymEntry(res));
 	  }
-	  otherwise {return notImplementedError(pn,operator,gVal.dtype);}
+	  otherwise {return (notImplementedError(pn,operator,gVal.dtype)):bytes;}
 	  }
       }
       when (DType.Bool) {
@@ -486,10 +486,10 @@ module ReductionMsg
 	    var res = perLocMean(values.a, segments.a);
 	    st.addEntry(rname, new shared SymEntry(res));
 	  }
-	  otherwise {return notImplementedError(pn,operator,gVal.dtype);}
+	  otherwise {return (notImplementedError(pn,operator,gVal.dtype)):bytes;}
 	  }
       }
-      otherwise {return unrecognizedTypeError(pn, dtype2str(gVal.dtype));}
+      otherwise {return (unrecognizedTypeError(pn, dtype2str(gVal.dtype))):bytes;}
       }
       return try! "created " + st.attrib(rname);
     }

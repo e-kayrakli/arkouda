@@ -46,6 +46,17 @@ module NumPyDType
         if dstr == "bool" {return DType.Bool;}        
         return DType.UNDEF;
     }
+
+    /* Turns a dtype bytes in pythonland into a DType 
+
+    :arg dstr: pythonic dtype to be converted
+    :type dstr: bytes
+
+    :returns: DType
+    */
+    proc str2dtype(dstr:bytes): DType {
+      return try! str2dtype(dstr.decode());
+    }
     
     /* Turns a DType into a dtype string in pythonland 
 

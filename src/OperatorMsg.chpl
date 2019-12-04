@@ -136,7 +136,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, int);
                         e.a= l.a**r.a;
                     }     
-                    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
                 }
             }
             when (DType.Int64, DType.Float64) {
@@ -195,7 +195,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
                         e.a= l.a**r.a;
                     }    
-                    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
                 }
             }
             when (DType.Float64, DType.Int64) {
@@ -254,7 +254,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
                         e.a= l.a**r.a;
                     }      
-                    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
                 }
             }
             when (DType.Float64, DType.Float64) {
@@ -313,7 +313,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
                         e.a= l.a**r.a;
                     }     
-                    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
                 }
             }
 	    when (DType.Bool, DType.Bool) {
@@ -336,7 +336,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, bool);
                         e.a = l.a == r.a;
                     }
-		    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+		    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Bool, DType.Int64) {
@@ -355,7 +355,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, int);
 		        e.a = l.a:int * r.a;
 		    }
-		    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+		    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Int64, DType.Bool) {
@@ -374,7 +374,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, int);
 		        e.a = l.a * r.a:int;
 		    }
-		    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+		    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Bool, DType.Float64) {
@@ -393,7 +393,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
 		        e.a = l.a:real * r.a;
 		    }
-		    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+		    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Float64, DType.Bool) {
@@ -412,7 +412,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
 		        e.a = l.a * r.a:real;
 		    }
-		    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+		    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
 		}
 	    }
             otherwise {return unrecognizedTypeError(pn,
@@ -532,7 +532,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, int);
                         e.a= l.a**val;
                     }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
                 }
             }
             when (DType.Int64, DType.Float64) {
@@ -590,7 +590,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
                         e.a= l.a**val;
                     }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
                 }
             }
             when (DType.Float64, DType.Int64) {
@@ -648,7 +648,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
                         e.a= l.a**val;
                     }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
                 }
             }
             when (DType.Float64, DType.Float64) {
@@ -706,7 +706,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
                         e.a= l.a**val;
                     }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
                 }
             }
 	    when (DType.Bool, DType.Bool) {
@@ -725,7 +725,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, bool);
 		        e.a = l.a ^ val;
 		    }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
 		}
 	    }
 	    when (DType.Bool, DType.Int64) {
@@ -744,7 +744,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, int);
                         e.a = l.a:int * val;
 		    }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
 		}
 	    }
 	    when (DType.Int64, DType.Bool) {
@@ -763,7 +763,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, int);
                         e.a = l.a * val:int;
 		    }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
 		}
 	    }
 	    when (DType.Bool, DType.Float64) {
@@ -782,7 +782,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
                         e.a = l.a:real * val;
 		    }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
 		}
 	    }
 	    when (DType.Float64, DType.Bool) {
@@ -801,7 +801,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, l.size, real);
                         e.a = l.a * val:real;
 		    }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
 		}
 	    }
             otherwise {return unrecognizedTypeError(pn,
@@ -922,7 +922,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, int);
                         e.a= val**r.a;
                     }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
                 }
             }
             when (DType.Int64, DType.Float64) {
@@ -980,7 +980,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, real);
                         e.a= val**r.a;
                     }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
                 }
             }
             when (DType.Float64, DType.Int64) {
@@ -1038,7 +1038,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, real);
                         e.a= val**r.a;
                     }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
                 }
             }
             when (DType.Float64, DType.Float64) {
@@ -1096,7 +1096,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, real);
                         e.a= val**r.a;
                     }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
                 }
             }
 	    when (DType.Bool, DType.Bool) {
@@ -1115,7 +1115,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, bool);
  		        e.a = val ^ r.a;
 		    }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Bool, DType.Int64) {
@@ -1134,7 +1134,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, int);
                         e.a = val:int * r.a;
 		    }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Int64, DType.Bool) {
@@ -1153,7 +1153,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, int);
                         e.a = val * r.a:int;
 		    }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Bool, DType.Float64) {
@@ -1172,7 +1172,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, real);
                         e.a = val:real * r.a;
 		    }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Float64, DType.Bool) {
@@ -1191,7 +1191,7 @@ module OperatorMsg
                         var e = st.addEntry(rname, r.size, real);
                         e.a = val * r.a:real;
 		    }
-                    otherwise {return notImplementedError(pn,dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,dtype,op,right.dtype)):bytes;}
 		}
 	    }
             otherwise {return unrecognizedTypeError(pn,
@@ -1252,13 +1252,13 @@ module OperatorMsg
                         }
                         else{ l.a **= r.a; }
                     }
-                    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
                 }
             }
             when (DType.Int64, DType.Float64) {
                 var l = toSymEntry(left,int);
                 var r = toSymEntry(right,real);
-                return notImplementedError(pn,left.dtype,op,right.dtype);
+                return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;
             }
             when (DType.Float64, DType.Int64) {
                 var l = toSymEntry(left,real);
@@ -1275,7 +1275,7 @@ module OperatorMsg
                         [(li,ri) in zip(la,ra)] li = if ri != 0 then floor(li / ri) else NAN;
                     }
                     when "**=" { l.a **= r.a; }
-                    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
                 }
             }
             when (DType.Float64, DType.Float64) {
@@ -1293,7 +1293,7 @@ module OperatorMsg
                         [(li,ri) in zip(la,ra)] li = if ri != 0 then floor(li / ri) else NAN;
                     }
                     when "**=" { l.a **= r.a; }
-                    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
                 }
             }
 	    when (DType.Bool, DType.Bool) {
@@ -1304,7 +1304,7 @@ module OperatorMsg
 		    when "|=" {l.a |= r.a;}
 		    when "&=" {l.a &= r.a;}
 		    when "^=" {l.a ^= r.a;}
-		    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+		    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Int64, DType.Bool) {
@@ -1315,7 +1315,7 @@ module OperatorMsg
 		    when "+=" {l.a += r.a:int;}
 		    when "-=" {l.a -= r.a:int;}
 		    when "*=" {l.a *= r.a:int;}
-  		    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+  		    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
 		}
 	    }
 	    when (DType.Float64, DType.Bool) {
@@ -1326,7 +1326,7 @@ module OperatorMsg
 		    when "+=" {l.a += r.a:real;}
 		    when "-=" {l.a -= r.a:real;}
 		    when "*=" {l.a *= r.a:real;}
-  		    otherwise {return notImplementedError(pn,left.dtype,op,right.dtype);}
+  		    otherwise {return (notImplementedError(pn,left.dtype,op,right.dtype)):bytes;}
 		}
 	    }
             otherwise {return unrecognizedTypeError(pn,
@@ -1384,13 +1384,13 @@ module OperatorMsg
                         else{ l.a **= val; }
 
                     }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
                 }
             }
             when (DType.Int64, DType.Float64) {
                 var l = toSymEntry(left,int);
                 var val = try! value:real;
-                return notImplementedError(pn,left.dtype,op,dtype);
+                return (notImplementedError(pn,left.dtype,op,dtype)):bytes;
             }
             when (DType.Float64, DType.Int64) {
                 var l = toSymEntry(left,real);
@@ -1405,7 +1405,7 @@ module OperatorMsg
                         if val != 0 {l.a = floor(l.a / val);} else {l.a = NAN;}
                     }
                     when "**=" { l.a **= val; }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
                 }
             }
             when (DType.Float64, DType.Float64) {
@@ -1421,7 +1421,7 @@ module OperatorMsg
                         if val != 0 {l.a = floor(l.a / val);} else {l.a = NAN;}
                     }
                     when "**=" { l.a **= val; }
-                    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+                    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
                 }
             }
 	    when (DType.Int64, DType.Bool) {
@@ -1431,7 +1431,7 @@ module OperatorMsg
 		    when "+=" {l.a += val:int;}
 		    when "-=" {l.a -= val:int;}
 		    when "*=" {l.a *= val:int;}
-		    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+		    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
 		}
 	    }
 	    when (DType.Float64, DType.Bool) {
@@ -1441,7 +1441,7 @@ module OperatorMsg
 		    when "+=" {l.a += val:real;}
 		    when "-=" {l.a -= val:real;}
 		    when "*=" {l.a *= val:real;}
-		    otherwise {return notImplementedError(pn,left.dtype,op,dtype);}
+		    otherwise {return (notImplementedError(pn,left.dtype,op,dtype)):bytes;}
 		}
 	    }
             otherwise {return unrecognizedTypeError(pn,

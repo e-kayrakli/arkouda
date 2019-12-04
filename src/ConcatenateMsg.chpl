@@ -23,7 +23,7 @@ module ConcatenateMsg
         var n = try! fields[2]:int; // number of arrays to sort
         var names = fields[3..];
         // Check that fields contains the stated number of arrays
-        if (n != names.size) { return try! incompatibleArgumentsError(pn, "Expected %i arrays but got %i".format(n, names.size)); }
+        if (n != names.size) { return (try! incompatibleArgumentsError(pn, "Expected %i arrays but got %i".format(n, names.size))):bytes; }
         /* var arrays: [0..#n] borrowed GenSymEntry; */
         var size: int = 0;
         var dtype: DType;
@@ -34,7 +34,7 @@ module ConcatenateMsg
             if (i == 1) {dtype = g.dtype;}
             else {
                 if (dtype != g.dtype) {
-                    return try! incompatibleArgumentsError(pn, "Expected %s dtype but got %s dtype".format(dtype2str(dtype), dtype2str(g.dtype)));
+                    return (try! incompatibleArgumentsError(pn, "Expected %s dtype but got %s dtype".format(dtype2str(dtype), dtype2str(g.dtype)))):bytes;
                 }
             }
             // accumulate size from each array size
@@ -96,7 +96,7 @@ module ConcatenateMsg
                     start += o.size;
                 }
             }
-            otherwise {return notImplementedError("concatenate",dtype);}
+            otherwise {return (notImplementedError("concatenate",dtype)):bytes;}
         }
 
         return try! "created " + st.attrib(rname);

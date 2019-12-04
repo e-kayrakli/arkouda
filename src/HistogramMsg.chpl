@@ -56,7 +56,7 @@ module HistogramMsg
         select (gEnt.dtype) {
             when (DType.Int64)   {histogramHelper(int);}
             when (DType.Float64) {histogramHelper(real);}
-            otherwise {return notImplementedError(pn,gEnt.dtype);}
+            otherwise {return (notImplementedError(pn,gEnt.dtype)):bytes;}
         }
         
         return try! "created " + st.attrib(rname);

@@ -36,16 +36,16 @@ module FindSegmentsMsg
 	var size = try! fields[4]:int; // size of key arrays
         var knames = fields[5..]; // key arrays
 	if (nkeys != knames.size) {
-	  return try! incompatibleArgumentsError(pn, "Expected %i key arrays, but got %i".format(nkeys, knames.size));
+	  return (try! incompatibleArgumentsError(pn, "Expected %i key arrays, but got %i".format(nkeys, knames.size))):bytes;
 	}
 	// Check all the argument arrays before doing anything
 	var gPerm = st.lookup(pname);
-	if (gPerm.dtype != DType.Int64) { return notImplementedError(pn,"(permutation dtype "+dtype2str(gPerm.dtype)+")"); }	
+	if (gPerm.dtype != DType.Int64) { return (notImplementedError(pn,"(permutation dtype "+dtype2str(gPerm.dtype)+")")):bytes; }	
 	// var keyEntries: [0..#nkeys] borrowed GenSymEntry;
 	for (name, i) in zip(knames, 0..) {
 	  var g = st.lookup(name);
-	  if (g.size != size) { return try! incompatibleArgumentsError(pn, "Expected array of size %i, got size %i".format(size, g.size)); }
-	  if (g.dtype != DType.Int64) { return notImplementedError(pn,"(key array dtype "+dtype2str(g.dtype)+")");}
+	  if (g.size != size) { return (try! incompatibleArgumentsError(pn, "Expected array of size %i, got size %i".format(size, g.size))):bytes; }
+	  if (g.dtype != DType.Int64) { return (notImplementedError(pn,"(key array dtype "+dtype2str(g.dtype)+")")):bytes;}
 	}
 	
 	// At this point, all arg arrays exist, have the same size, and are int64 dtype
@@ -120,7 +120,7 @@ module FindSegmentsMsg
                 st.addEntry(sname, new shared SymEntry(segs));
                 st.addEntry(uname, new shared SymEntry(ukeys));
             }
-            otherwise {return notImplementedError(pn,"("+dtype2str(kEnt.dtype)+")");}
+            otherwise {return (notImplementedError(pn,"("+dtype2str(kEnt.dtype)+")")):bytes;}
         }
         
         return try! "created " + st.attrib(sname) + " +created " + st.attrib(uname);

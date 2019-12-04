@@ -79,7 +79,7 @@ module UniqueMsg
                 if returnCounts {st.addEntry(cname, new shared SymEntry(aC));}
                     
             }
-            otherwise {return notImplementedError("unique",gEnt.dtype);}
+            otherwise {return (notImplementedError("unique",gEnt.dtype)):bytes;}
         }
         
         var s = try! "created " + st.attrib(vname);
@@ -136,7 +136,7 @@ module UniqueMsg
                 st.addEntry(vname, new shared SymEntry(aV));
                 st.addEntry(cname, new shared SymEntry(aC));
             }
-            otherwise {return notImplementedError(pn,gEnt.dtype);}
+            otherwise {return (notImplementedError(pn,gEnt.dtype)):bytes;}
         }
         
         return try! "created " + st.attrib(vname) + " +created " + st.attrib(cname);

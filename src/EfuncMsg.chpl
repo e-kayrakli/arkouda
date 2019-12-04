@@ -75,7 +75,7 @@ module EfuncMsg
                         var a = st.addEntry(rname, e.size, real);
                         a.a = Math.cos(e.a);
                     }
-                    otherwise {return notImplementedError(pn,efunc,gEnt.dtype);}
+                    otherwise {return (notImplementedError(pn,efunc,gEnt.dtype)):bytes;}
                 }
             }
             when (DType.Float64) {
@@ -110,7 +110,7 @@ module EfuncMsg
                         var a = st.addEntry(rname, e.size, real);
                         a.a = Math.cos(e.a);
                     }
-                    otherwise {return notImplementedError(pn,efunc,gEnt.dtype);}
+                    otherwise {return (notImplementedError(pn,efunc,gEnt.dtype)):bytes;}
                 }
             }
             when (DType.Bool) {
@@ -127,10 +127,10 @@ module EfuncMsg
                         var a = st.addEntry(rname, e.size, int);
                         a.a = * scan ia;
                     }
-                    otherwise {return notImplementedError(pn,efunc,gEnt.dtype);}
+                    otherwise {return (notImplementedError(pn,efunc,gEnt.dtype)):bytes;}
                 }
             }
-            otherwise {return unrecognizedTypeError(pn, dtype2str(gEnt.dtype));}
+            otherwise {return (unrecognizedTypeError(pn, dtype2str(gEnt.dtype))):bytes;}
         }
         return try! "created " + st.attrib(rname);
     }
@@ -176,7 +176,7 @@ module EfuncMsg
 	      var a = where_helper(e1.a, e2.a, e3.a, 0);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,g2.dtype,g3.dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,g2.dtype,g3.dtype)):bytes;}
 	    } 
 	}
 	when (DType.Bool, DType.Float64, DType.Float64) {
@@ -188,7 +188,7 @@ module EfuncMsg
 	      var a = where_helper(e1.a, e2.a, e3.a, 0);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,g2.dtype,g3.dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,g2.dtype,g3.dtype)):bytes;}
 	    } 
 	}
 	when (DType.Bool, DType.Bool, DType.Bool) {
@@ -200,10 +200,10 @@ module EfuncMsg
 	      var a = where_helper(e1.a, e2.a, e3.a, 0);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,g2.dtype,g3.dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,g2.dtype,g3.dtype)):bytes;}
 	    } 
 	}
-	otherwise {return notImplementedError(pn,efunc,g1.dtype,g2.dtype,g3.dtype);}
+	otherwise {return (notImplementedError(pn,efunc,g1.dtype,g2.dtype,g3.dtype)):bytes;}
 	}
 	return try! "created " + st.attrib(rname);
     }
@@ -248,7 +248,7 @@ module EfuncMsg
 	      var a = where_helper(e1.a, e2.a, val, 1);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,g2.dtype,dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,g2.dtype,dtype)):bytes;}
 	    } 
 	}
 	when (DType.Bool, DType.Float64, DType.Float64) {
@@ -260,7 +260,7 @@ module EfuncMsg
 	      var a = where_helper(e1.a, e2.a, val, 1);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,g2.dtype,dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,g2.dtype,dtype)):bytes;}
 	    } 
 	}
 	when (DType.Bool, DType.Bool, DType.Bool) {
@@ -272,10 +272,10 @@ module EfuncMsg
 	      var a = where_helper(e1.a, e2.a, val, 1);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,g2.dtype,dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,g2.dtype,dtype)):bytes;}
 	    } 
 	}
-	otherwise {return notImplementedError(pn,efunc,g1.dtype,g2.dtype,dtype);}
+	otherwise {return (notImplementedError(pn,efunc,g1.dtype,g2.dtype,dtype)):bytes;}
 	}
 	return try! "created " + st.attrib(rname);
     }
@@ -320,7 +320,7 @@ module EfuncMsg
 	      var a = where_helper(e1.a, val, e2.a, 2);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,dtype,g2.dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,dtype,g2.dtype)):bytes;}
 	    } 
 	}
 	when (DType.Bool, DType.Float64, DType.Float64) {
@@ -332,7 +332,7 @@ module EfuncMsg
 	      var a = where_helper(e1.a, val, e2.a, 2);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,dtype,g2.dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,dtype,g2.dtype)):bytes;}
 	    } 
 	}
 	when (DType.Bool, DType.Bool, DType.Bool) {
@@ -344,10 +344,10 @@ module EfuncMsg
 	      var a = where_helper(e1.a, val, e2.a, 2);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,dtype,g2.dtype);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,dtype,g2.dtype)):bytes;}
 	    } 
 	}
-	otherwise {return notImplementedError(pn,efunc,g1.dtype,dtype,g2.dtype);}
+	otherwise {return (notImplementedError(pn,efunc,g1.dtype,dtype,g2.dtype)):bytes;}
 	}
 	return try! "created " + st.attrib(rname);
     }
@@ -389,7 +389,7 @@ module EfuncMsg
 	      var a = where_helper(e1.a, val1, val2, 3);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,dtype1,dtype2);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,dtype1,dtype2)):bytes;}
 	    } 
 	}
 	when (DType.Bool, DType.Float64, DType.Float64) {
@@ -401,7 +401,7 @@ module EfuncMsg
 	      var a = where_helper(e1.a, val1, val2, 3);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,dtype1,dtype2);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,dtype1,dtype2)):bytes;}
 	    } 
 	}
 	when (DType.Bool, DType.Bool, DType.Bool) {
@@ -413,10 +413,10 @@ module EfuncMsg
 	      var a = where_helper(e1.a, val1, val2, 3);
 	      st.addEntry(rname, new shared SymEntry(a));
 	    }
-	    otherwise {return notImplementedError(pn,efunc,g1.dtype,dtype1,dtype2);}
+	    otherwise {return (notImplementedError(pn,efunc,g1.dtype,dtype1,dtype2)):bytes;}
 	    } 
 	}
-	otherwise {return notImplementedError(pn,efunc,g1.dtype,dtype1,dtype2);}
+	otherwise {return (notImplementedError(pn,efunc,g1.dtype,dtype1,dtype2)):bytes;}
 	}
 	return try! "created " + st.attrib(rname);
     }

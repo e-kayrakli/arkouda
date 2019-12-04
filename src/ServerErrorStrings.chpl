@@ -52,6 +52,14 @@ module ServerErrorStrings
         return try! "Error: unknown symbol: %s".format(sname);
     }
 
+    /* name not found in the symbol table */
+    proc unknownSymbolError(pname: string, sname: bytes):string {
+      if pname != "" then
+        return try! "Error: %s: unknown symbol: %s".format(pname, sname);
+      else
+        return try! "Error: unknown symbol: %s".format(sname);
+    }
+
     proc unknownError(pname: string): string {
       return try! "Error: %s: unexpected error".format(pname);
     }

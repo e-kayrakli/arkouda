@@ -52,7 +52,7 @@ module MsgProcessing
         // create and add entry to symbol table
         st.addEntry(rname, size, dtype);
         // response message
-        return try! "created " + st.attrib(rname);
+        return try! (b"created " + st.attrib(rname)):bytes;
     }
 
     /* 
@@ -74,7 +74,7 @@ module MsgProcessing
         if v {try! writeln("%s %s".format(cmd,name));try! stdout.flush();}
         // delete entry from symbol table
         st.deleteEntry(name);
-        return try! "deleted %s".format(name);
+        return try! ("deleted %s".format(name)):bytes;
     }
 
     /* 
@@ -96,7 +96,7 @@ module MsgProcessing
         var name = fields[2];
         if v {try! writeln("%s %s".format(cmd,name));try! stdout.flush();}
         // if name == "__AllSymbols__" passes back info on all symbols
-        return st.info(name);
+        return (st.info(name)):bytes;
     }
     
     /* 
@@ -115,7 +115,7 @@ module MsgProcessing
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         if v {try! writeln("%s".format(cmd));try! stdout.flush();}
-        return getConfig();
+        return (getConfig()):bytes;
     }
 
     /* 
@@ -134,7 +134,7 @@ module MsgProcessing
         var fields = reqMsg.split(); // split request into fields
         var cmd = fields[1];
         if v {try! writeln("%s".format(cmd));try! stdout.flush();}
-        return st.memUsed():string;
+        return (st.memUsed():string):bytes;
     }
     
     /* 
@@ -155,7 +155,7 @@ module MsgProcessing
         var name = fields[2];
         var printThresh = try! fields[3]:int;
         if v {try! writeln("%s %s %i".format(cmd,name,printThresh));try! stdout.flush();}
-        return st.datastr(name,printThresh);
+        return (st.datastr(name,printThresh)):bytes;
     }
 
     /* Response to __repr__ method in python.
@@ -176,7 +176,7 @@ module MsgProcessing
         var name = fields[2];
         var printThresh = try! fields[3]:int;
         if v {try! writeln("%s %s %i".format(cmd,name,printThresh));try! stdout.flush();}
-        return st.datarepr(name,printThresh);
+        return (st.datarepr(name,printThresh)):bytes;
     }
 
 
@@ -216,7 +216,7 @@ module MsgProcessing
         }
         writeln("compute time = ",Time.getCurrentTime() - t1,"sec"); try! stdout.flush();
 
-        return try! "created " + st.attrib(rname);
+        return (try! b"created " + st.attrib(rname)):bytes;
     }            
 
     /* 
@@ -257,7 +257,7 @@ module MsgProcessing
         ea[len-1] = stop;
         writeln("compute time = ",Time.getCurrentTime() - t1,"sec"); try! stdout.flush();
 
-        return try! "created " + st.attrib(rname);
+        return (try! b"created " + st.attrib(rname)):bytes;
     }
 
     /* 
@@ -289,14 +289,14 @@ module MsgProcessing
                 var val: int = try! value:int;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val));try! stdout.flush();}
                 e.a = val;
-                repMsg = try! "set %s to %t".format(name, val);
+                repMsg = try! ("set %s to %t".format(name, val)):bytes;
             }
             when (DType.Int64, DType.Float64) {
                 var e = toSymEntry(gEnt,int);
                 var val: real = try! value:real;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val:int));try! stdout.flush();}
                 e.a = val:int;
-                repMsg = try! "set %s to %t".format(name, val:int);
+                repMsg = try! ("set %s to %t".format(name, val:int)):bytes;
             }
             when (DType.Int64, DType.Bool) {
                 var e = toSymEntry(gEnt,int);
@@ -305,21 +305,21 @@ module MsgProcessing
                 var val: bool = try! value:bool;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val:int));try! stdout.flush();}
                 e.a = val:int;
-                repMsg = try! "set %s to %t".format(name, val:int);
+                repMsg = try! ("set %s to %t".format(name, val:int)):bytes;
             }
             when (DType.Float64, DType.Int64) {
                 var e = toSymEntry(gEnt,real);
                 var val: int = try! value:int;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val:real));try! stdout.flush();}
                 e.a = val:real;
-                repMsg = try! "set %s to %t".format(name, val:real);
+                repMsg = try! ("set %s to %t".format(name, val:real)):bytes;
             }
             when (DType.Float64, DType.Float64) {
                 var e = toSymEntry(gEnt,real);
                 var val: real = try! value:real;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val));try! stdout.flush();}
                 e.a = val;
-                repMsg = try! "set %s to %t".format(name, val);
+                repMsg = try! ("set %s to %t".format(name, val)):bytes;
             }
             when (DType.Float64, DType.Bool) {
                 var e = toSymEntry(gEnt,real);
@@ -328,21 +328,21 @@ module MsgProcessing
                 var val: bool = try! value:bool;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val:real));try! stdout.flush();}
                 e.a = val:real;
-                repMsg = try! "set %s to %t".format(name, val:real);
+                repMsg = try! ("set %s to %t".format(name, val:real)):bytes;
             }
             when (DType.Bool, DType.Int64) {
                 var e = toSymEntry(gEnt,bool);
                 var val: int = try! value:int;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val:bool));try! stdout.flush();}
                 e.a = val:bool;
-                repMsg = try! "set %s to %t".format(name, val:bool);
+                repMsg = try! ("set %s to %t".format(name, val:bool)):bytes;
             }
             when (DType.Bool, DType.Float64) {
                 var e = toSymEntry(gEnt,int);
                 var val: real = try! value:real;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val:bool));try! stdout.flush();}
                 e.a = val:bool;
-                repMsg = try! "set %s to %t".format(name, val:bool);
+                repMsg = try! ("set %s to %t".format(name, val:bool)):bytes;
             }
             when (DType.Bool, DType.Bool) {
                 var e = toSymEntry(gEnt,bool);
@@ -351,9 +351,9 @@ module MsgProcessing
                 var val: bool = try! value:bool;
                 if v {try! writeln("%s %s to %t".format(cmd,name,val));try! stdout.flush();}
                 e.a = val;
-                repMsg = try! "set %s to %t".format(name, val);
+                repMsg = try! ("set %s to %t".format(name, val)):bytes;
             }
-            otherwise {return unrecognizedTypeError(pn,fields[3]);}
+            otherwise {return (unrecognizedTypeError(pn,fields[3])):bytes;}
         }
         return repMsg;
     }

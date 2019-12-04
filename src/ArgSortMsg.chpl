@@ -417,7 +417,7 @@ module ArgSortMsg
       var n = try! fields[2]:int; // number of arrays to sort
       var names = fields[3..];
       // Check that fields contains the stated number of arrays
-      if (n != names.size) { return try! incompatibleArgumentsError(pn, "Expected %i arrays but got %i".format(n, names.size)); }
+      if (n != names.size) { return (try! incompatibleArgumentsError(pn, "Expected %i arrays but got %i".format(n, names.size))):bytes; }
       /* var arrays: [0..#n] borrowed GenSymEntry; */
       var size: int;
       // Check that all arrays exist in the symbol table and have the same size
@@ -427,7 +427,7 @@ module ArgSortMsg
 	if (i == 1) {
 	  size = g.size;
 	} else {
-	  if (g.size != size) { return incompatibleArgumentsError(pn, "Arrays must all be same size"); }
+	  if (g.size != size) { return (incompatibleArgumentsError(pn, "Arrays must all be same size")):bytes; }
 	}
       }
 
@@ -448,7 +448,7 @@ module ArgSortMsg
 	  iv.a = incrementalArgSort(g, iv.a);
 	} catch e:ErrorWithMsg {
 	  // The only error thrown is for an unsupported dtype
-	  return notImplementedError(pn, e.msg);
+	  return (notImplementedError(pn, e.msg)):bytes;
 	} catch {
 	  return try! "Error: %s unknown cause".format(pn);
 	}
@@ -495,7 +495,7 @@ module ArgSortMsg
 		var iv = argsortDefault(e.a);
 		st.addEntry(ivname, new shared SymEntry(iv));
 	    }
-            otherwise {return notImplementedError(pn,gEnt.dtype);}
+            otherwise {return (notImplementedError(pn,gEnt.dtype)):bytes;}
         }
         
         return try! "created " + st.attrib(ivname);
@@ -521,7 +521,7 @@ module ArgSortMsg
 		var iv = perLocaleArgSort(e.a);
 		st.addEntry(ivname, new shared SymEntry(iv));
 	    }
-	    otherwise {return notImplementedError(pn,gEnt.dtype);}
+	    otherwise {return (notImplementedError(pn,gEnt.dtype)):bytes;}
 	}
 	return try! "created " + st.attrib(ivname);
     }

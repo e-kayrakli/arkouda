@@ -54,7 +54,7 @@ module SortMsg
           var sorted = sort(e.a);
           st.addEntry(sortedName, new shared SymEntry(sorted));
         }// end when(DType.Float64)
-        otherwise {return notImplementedError(pn,gEnt.dtype);}
+        otherwise {return (notImplementedError(pn,gEnt.dtype)):bytes;}
       }// end select(gEnt.dtype)
         
       return try! "created " + st.attrib(sortedName);

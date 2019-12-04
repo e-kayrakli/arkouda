@@ -88,7 +88,7 @@ module RandMsg
                 }
                         writeln("compute time = ",Time.getCurrentTime() - t1,"sec"); try! stdout.flush();
             }            
-            otherwise {return notImplementedError(pn,dtype);}
+            otherwise {return (notImplementedError(pn,dtype)):bytes;}
         }
         // response message
         return try! "created " + st.attrib(rname);

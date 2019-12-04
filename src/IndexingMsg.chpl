@@ -38,7 +38,7 @@ module IndexingMsg
                  s = s.replace("false","False"); // chapel to python bool
                  return s;
              }
-             otherwise {return notImplementedError(pn,dtype2str(gEnt.dtype));}
+             otherwise {return (notImplementedError(pn,dtype2str(gEnt.dtype))):bytes;}
          }
     }
 
@@ -89,7 +89,7 @@ module IndexingMsg
             when (DType.Bool) {
                 return sliceHelper(bool);
             }
-            otherwise {return notImplementedError(pn,dtype2str(gEnt.dtype));}
+            otherwise {return (notImplementedError(pn,dtype2str(gEnt.dtype))):bytes;}
         }
     }
 

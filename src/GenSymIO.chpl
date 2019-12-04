@@ -28,7 +28,7 @@ module GenSymIO {
       const entry: shared GenSymEntry = readEntry();
       const rname = st.nextName();
       st.addEntry(rname, entry);
-      return try! ("created " + st.attrib(rname)):bytes;
+      return try! (b"created " + st.attrib(rname)):bytes;
     } catch err: UnhandledDataTypeError {
       return try! ("Error: Unhandled data type %s".format(err.dtype)):bytes;
     } catch {
@@ -229,7 +229,7 @@ module GenSymIO {
     try {
       (subdoms, len) = get_subdoms(filenames, dsetName);
     } catch e: HDF5RankError {
-      return notImplementedError("readhdf", try! "Rank %i arrays".format(e.rank));
+      return (notImplementedError("readhdf", try! "Rank %i arrays".format(e.rank))):bytes;
     } catch {
       return try! ("Error: unknown cause"):bytes;
     }
@@ -240,7 +240,7 @@ module GenSymIO {
     var entry: shared GenSymEntry = computeEntry(dataclass);
     var rname = st.nextName();
     st.addEntry(rname, entry);
-    return try! "created " + st.attrib(rname);
+    return try! (b"created " + st.attrib(rname)):bytes;
     } catch e: UnhandledHDFSDataTypeError {
       return try! ("Error: detected unhandled datatype code %i".format(dataclass)):bytes;
     } catch {
@@ -452,7 +452,7 @@ module GenSymIO {
 	warnFlag = write1DDistArray(filename, mode, dsetName, e.a);
       }
       otherwise {
-	return unrecognizedTypeError("tohdf", dtype2str(entry.dtype));
+	return (unrecognizedTypeError("tohdf", dtype2str(entry.dtype))):bytes;
       }
     }
     } catch e: FileNotFoundError {
@@ -529,7 +529,7 @@ module GenSymIO {
 	const locDom = A.localSubdomain();
 	var dims: [0..#1] C_HDF5.hsize_t;
 	dims[0] = locDom.size: C_HDF5.hsize_t;
-	var myDsetName = "/" + dsetName;
+	var myDsetName = b"/" + dsetName;
 	
 	use C_HDF5.HDF5_WAR;
 	H5LTmake_dataset_WAR(myFileID, myDsetName.c_str(), 1, c_ptrTo(dims),

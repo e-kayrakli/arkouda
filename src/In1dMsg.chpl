@@ -76,7 +76,7 @@ module In1dMsg
                 else {return try! ("Error: %s: ar2 size too large %t".format(pn,ar2.size)):bytes;}
                 
             }
-            otherwise {return notImplementedError(pn,gAr1.dtype,"in",gAr2.dtype);}
+            otherwise {return (notImplementedError(pn,gAr1.dtype,"in",gAr2.dtype)):bytes;}
         }
         
         return try! "created " + st.attrib(rname);
