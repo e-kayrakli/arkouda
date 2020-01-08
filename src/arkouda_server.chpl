@@ -38,6 +38,10 @@ proc main() {
     var reqCount: int = 0;
     var repCount: int = 0;
 
+    var t1 = new Time.Timer();
+    t1.clear();
+    t1.start();
+
     proc sendRepMsg(repMsg: ?t) where t==string || t==bytes {
         repCount += 1;
         if v {
@@ -70,6 +74,7 @@ proc main() {
         const fieldsRaw = reqMsgRaw.split(1);
         const cmdRaw = fieldsRaw[1];
         var repMsg: string;
+        var s0 = t1.elapsed();
         // parse requests, execute requests, format responses
         try {
             // first handle the case where we received arbitrary data
@@ -90,7 +95,6 @@ proc main() {
                         try! stdout.flush();
                     }
                     sendRepMsg(unknownError(""));
->>>>>>> junk Makefile changes
                 }
                 if v { writeln("reqMsg: ", reqMsg); }
 
@@ -178,7 +182,7 @@ proc main() {
         if (logging && memTrack) {writeln("bytes of memoryUsed() = ",memoryUsed()); try! stdout.flush();}
 
         // end timer for command processing
-        if (logging) {writeln("<<< %s took %.17r sec".format(cmdRaw, t1.elapsed() - s0)); try! stdout.flush();}
+        if (logging) {writeln("<<< %s took %.17r sec".format(cmdRaw.decode(decodePolicy.replace), t1.elapsed() - s0)); try! stdout.flush();}
     }
     t1.stop();
     deleteServerConnectionInfo();
