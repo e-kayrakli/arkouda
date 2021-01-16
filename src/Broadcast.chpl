@@ -25,15 +25,15 @@ module Broadcast {
     }
     // Convert to the dense derivative (in full domain) of values
     var expandedVals: [D] t;
-    forall (s, d) in zip(segs, diffs) with (var agg = newDstAggregator(t)) {
-      agg.copy(expandedVals[s], d);
+    forall (s, d) in zip(segs, diffs) {
+      expandedVals[s] = d;
     }
     // Integrate to recover full values
     expandedVals = (+ scan expandedVals);
     // Permute to the original array order
     var permutedVals: [D] t;
-    forall (i, v) in zip(perm, expandedVals) with (var agg = newDstAggregator(t)) {
-      agg.copy(permutedVals[i], v);
+    forall (i, v) in zip(perm, expandedVals) {
+      permutedVals[i] = v;
     }
     return permutedVals;
   }
@@ -62,15 +62,15 @@ module Broadcast {
     }
     // Convert to the dense derivative (in full domain) of values
     var expandedVals: [D] int(8);
-    forall (s, d) in zip(segs, diffs) with (var agg = newDstAggregator(int(8))) {
-      agg.copy(expandedVals[s], d);
+    forall (s, d) in zip(segs, diffs) {
+      expandedVals[s] = d;
     }
     // Integrate to recover full values
     expandedVals = (+ scan expandedVals);
     // Permute to the original array order and convert back to bool
     var permutedVals: [D] bool;
-    forall (i, v) in zip(perm, expandedVals) with (var agg = newDstAggregator(bool)) {
-      agg.copy(permutedVals[i], v == 1);
+    forall (i, v) in zip(perm, expandedVals) {
+      permutedVals[i] = v == 1;
     }
     return permutedVals;
   }
@@ -96,8 +96,8 @@ module Broadcast {
     }
     // Convert to the dense derivative (in full domain) of values
     var expandedVals = makeDistArray(size, t);
-    forall (s, d) in zip(segs, diffs) with (var agg = newDstAggregator(t)) {
-      agg.copy(expandedVals[s], d);
+    forall (s, d) in zip(segs, diffs) {
+      expandedVals[s] = d;
     }
     // Integrate to recover full values
     expandedVals = (+ scan expandedVals);
@@ -120,8 +120,8 @@ module Broadcast {
     }
     // Convert to the dense derivative (in full domain) of values
     var expandedVals = makeDistArray(size, int(8));
-    forall (s, d) in zip(segs, diffs) with (var agg = newDstAggregator(int(8))) {
-      agg.copy(expandedVals[s], d);
+    forall (s, d) in zip(segs, diffs) {
+      expandedVals[s] = d;
     }
     // Integrate to recover full values
     expandedVals = (+ scan expandedVals);

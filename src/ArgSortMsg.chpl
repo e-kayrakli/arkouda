@@ -396,8 +396,8 @@ module ArgSortMsg
               var newa: [e.aD] int;
               ref olda = e.a;
               // Effectively: newa = olda[iv]
-              forall (newai, idx) in zip(newa, iv) with (var agg = newSrcAggregator(int)) {
-                  agg.copy(newai, olda[idx]);
+              forall (newai, idx) in zip(newa, iv) {
+                  newai = olda[idx];
               }
               // Generate the next incremental permutation
               deltaIV = radixSortLSD_ranks(newa);
@@ -406,8 +406,8 @@ module ArgSortMsg
               var e = toSymEntry(g, real);
               var newa: [e.aD] real;
               ref olda = e.a;
-              forall (newai, idx) in zip(newa, iv) with (var agg = newSrcAggregator(real)) {
-                  agg.copy(newai, olda[idx]);
+              forall (newai, idx) in zip(newa, iv) {
+                  newai = olda[idx];
               }
               deltaIV = radixSortLSD_ranks(newa);
           }
@@ -423,8 +423,8 @@ module ArgSortMsg
       // The output permutation is the composition of the initial and incremental permutations
       var newIV: [aD] int;
       // Effectively: newIV = iv[deltaIV] 
-      forall (newIVi, idx) in zip(newIV, deltaIV) with (var agg = newSrcAggregator(int)) {
-        agg.copy(newIVi, iv[idx]);
+      forall (newIVi, idx) in zip(newIV, deltaIV) {
+        newIVi = iv[idx];
       }
       return newIV;
     }
@@ -432,15 +432,15 @@ module ArgSortMsg
     proc incrementalArgSort(s: SegString, iv: [?aD] int): [] int throws {
       var hashes = s.hash();
       var newHashes: [aD] 2*uint;
-      forall (nh, idx) in zip(newHashes, iv) with (var agg = newSrcAggregator((2*uint))) {
-        agg.copy(nh, hashes[idx]);
+      forall (nh, idx) in zip(newHashes, iv) {
+        nh = hashes[idx];
       }
       var deltaIV = radixSortLSD_ranks(newHashes);
       // var (newOffsets, newVals) = s[iv];
       // var deltaIV = newStr.argGroup();
       var newIV: [aD] int;
-      forall (newIVi, idx) in zip(newIV, deltaIV) with (var agg = newSrcAggregator(int)) {
-        agg.copy(newIVi, iv[idx]);
+      forall (newIVi, idx) in zip(newIV, deltaIV) {
+        newIVi = iv[idx];
       }
       return newIV;
     }

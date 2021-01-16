@@ -124,8 +124,8 @@ module FindSegmentsMsg
           ref ka = k.a; // ref to key array
           // Permute the key array to grouped order
           var permKey: [paD] int;
-          forall (s, p) in zip(permKey, pa) with (var agg = newSrcAggregator(int)) { 
-            agg.copy(s, ka[p]);
+          forall (s, p) in zip(permKey, pa) { 
+            s = ka[p];
           }
           // Find steps and update ukeylocs
           [(u, s, i) in zip(ukeylocs, permKey, paD)] if ((i > paD.low) && (permKey[i-1] != s))  { u = true; }
@@ -176,10 +176,10 @@ module FindSegmentsMsg
         ref saD = segs.aD;
         // segment position... 1-based needs to be converted to 0-based because of inclusive-scan
         // where ever a segment break (true value) is... that index is a segment start index
-        forall i in ukeylocs.domain with (var agg = newDstAggregator(int)) {
+        forall i in ukeylocs.domain {
           if (ukeylocs[i] == true) {
             var idx = i; 
-            agg.copy(sa[iv[i]-1], idx);
+            sa[iv[i]-1] = idx;
           }
         }
         // Create SymEntry to hold indices of unique keys in original (unpermuted) key arrays

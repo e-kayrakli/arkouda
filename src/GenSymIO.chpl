@@ -599,8 +599,8 @@ module GenSymIO {
         }
         // Insert height increases at region boundaries
         var sparseDiffs: [D] int;
-        forall (b, d) in zip(boundaries, diffs) with (var agg = newDstAggregator(int)) {
-            agg.copy(sparseDiffs[b], d);
+        forall (b, d) in zip(boundaries, diffs) {
+            sparseDiffs[b] = d;
         }
         // Make plateaus from peaks
         var corrections = + scan sparseDiffs;

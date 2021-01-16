@@ -172,8 +172,8 @@ module SegmentedArray {
       var newSegs = makeDistArray(slice.size, int);
       ref oa = offsets.a;
       // newSegs = offsets.a[slice] - start;
-      forall (i, ns) in zip(newSegs.domain, newSegs) with (var agg = newSrcAggregator(int)) {
-        agg.copy(ns, oa[slice.low + i]);
+      forall (i, ns) in zip(newSegs.domain, newSegs) {
+        ns = oa[slice.low + i];
       }
       // Offsets need to be re-zeroed
       newSegs -= start;
@@ -181,8 +181,8 @@ module SegmentedArray {
       var newVals = makeDistArray(end - start + 1, uint(8));
       ref va = values.a;
       // newVals = values.a[start..end];
-      forall (i, nv) in zip(newVals.domain, newVals) with (var agg = newSrcAggregator(uint(8))) {
-        agg.copy(nv, va[start + i]);
+      forall (i, nv) in zip(newVals.domain, newVals) {
+        nv = va[start + i];
       }
       return (newSegs, newVals);
     }
@@ -211,13 +211,13 @@ module SegmentedArray {
       // NOTE: cannot compute lengths inside forall because agg.copy will
       // experience race condition with loop-private variable
       var right: [D] int, left: [D] int;
-      forall (r, l, idx) in zip(right, left, iv) with (var agg = newSrcAggregator(int)) {
+      forall (r, l, idx) in zip(right, left, iv) {
         if (idx == high) {
-          agg.copy(r, values.size);
+          r = values.size;
         } else {
-          agg.copy(r, oa[idx+1]);
+          r = oa[idx+1];
         }
-        agg.copy(l, oa[idx]);
+        l = oa[idx];
       }
       // Lengths of segments including null bytes
       var gatheredLengths: [D] int = right - left;
@@ -254,14 +254,14 @@ module SegmentedArray {
           diffs[D.interior(D.size-1)] = left[D.interior(D.size-1)] - (right[D.interior(-(D.size-1))] - 1);
         }
         // Set srcIdx to diffs at segment boundaries
-        forall (go, d) in zip(gatheredOffsets, diffs) with (var agg = newDstAggregator(int)) {
-          agg.copy(srcIdx[go], d);
+        forall (go, d) in zip(gatheredOffsets, diffs) {
+          srcIdx[go] = d;
         }
         srcIdx = + scan srcIdx;
         // Now srcIdx has a dst-local copy of the source index and vals can be efficiently gathered
         ref va = values.a;
-        forall (v, si) in zip(gatheredVals, srcIdx) with (var agg = newSrcAggregator(uint(8))) {
-          agg.copy(v, va[si]);
+        forall (v, si) in zip(gatheredVals, srcIdx) {
+          v = va[si];
         }
       } else {
         ref va = values.a;
@@ -300,9 +300,9 @@ module SegmentedArray {
         return (makeDistArray(0, int), makeDistArray(0, uint(8)));
       }
       var segInds = makeDistArray(newSize, int);
-      forall (t, dst, idx) in zip(iv, steps, D) with (var agg = newDstAggregator(int)) {
+      forall (t, dst, idx) in zip(iv, steps, D) {
         if t {
-          agg.copy(segInds[dst], idx);
+          segInds[dst] = idx;
         }
       }
       return this[segInds];
@@ -781,8 +781,7 @@ module SegmentedArray {
     ref roffsets = rss.offsets.a;
     // Compare segments in parallel
     // Segments are guaranteed to be on same locale, but bytes are not
-    forall (t, lo, ro, idx) in zip(truth, loffsets, roffsets, oD) 
-      with (var agg = newDstAggregator(bool)) {
+    forall (t, lo, ro, idx) in zip(truth, loffsets, roffsets, oD) {
       var llen: int;
       var rlen: int;
       if (idx == oD.high) {
@@ -805,7 +804,7 @@ module SegmentedArray {
         // Only if lengths and all bytes are equal, override the default value
         if allEqual {
           // For ==, the output should be true; for !=, false
-          agg.copy(t, polarity);
+          t = polarity;
         }
       }
     }
@@ -844,20 +843,20 @@ module SegmentedArray {
     // Use a whole-array strategy, where the ith byte from every segment is checked simultaneously
     // This will do len(testStr) parallel loops, but loops will have low overhead
     for (b, i) in zip(testStr.chpl_bytes(), 0..) {
-      forall (t, o, idx) in zip(truth, offsets, oD) with (var agg = newDstAggregator(bool)) {
+      forall (t, o, idx) in zip(truth, offsets, oD) {
         if ((o+i > vD.high) || (b != values[o+i])) {
           // Strings are not equal, so change the output
           // For ==, output is now false; for !=, output is now true
-          agg.copy(t, !polarity);
+          t = !polarity;
         }
       }
     }
     // Check the length by checking that the next byte is null
-    forall (t, o, idx) in zip(truth, offsets, oD) with (var agg = newDstAggregator(bool)) {
+    forall (t, o, idx) in zip(truth, offsets, oD) {
       if ((o+testStr.size > vD.high) || (0 != values[o+testStr.size])) {
         // Strings are not equal, so change the output
         // For ==, output is now false; for !=, output is now true
-        agg.copy(t, !polarity);
+        t = !polarity;
       }
     }
     return truth;
@@ -996,8 +995,8 @@ module SegmentedArray {
       if invert {flag = !flag;}
       // Permute back to unique order
       var ret: [D] bool;
-      forall (o, f) in zip(order, flag) with (var agg = newDstAggregator(bool)) {
-        agg.copy(ret[o], f);
+      forall (o, f) in zip(order, flag) {
+        ret[o] = f;
       }
       if v {
           saLogger.debug(getModuleName(),getRoutineName(),getLineNumber(),
@@ -1005,8 +1004,8 @@ module SegmentedArray {
       }
       // Broadcast back to original (pre-unique) order
       var truth: [mainStr.offsets.aD] bool;
-      forall (t, i) in zip(truth, revIdx) with (var agg = newSrcAggregator(bool)) {
-        agg.copy(t, ret[i]);
+      forall (t, i) in zip(truth, revIdx) {
+        t = ret[i];
       }
       return truth;
     }

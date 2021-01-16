@@ -95,8 +95,8 @@ module IndexingMsg
             var a = st.addEntry(rname, slice.size, t);
             ref ea = e.a;
             ref aa = a.a;
-            forall (elt,j) in zip(aa, slice) with (var agg = newSrcAggregator(t)) {
-              agg.copy(elt,ea[j]);
+            forall (elt,j) in zip(aa, slice) {
+              elt =ea[j];
             }
             repMsg = "created " + st.attrib(rname);
             imLogger.debug(getModuleName(),getRoutineName(),getLineNumber(),repMsg);
@@ -163,8 +163,8 @@ module IndexingMsg
             ref a2 = e.a;
             ref iva = iv.a;
             ref aa = a.a;
-            forall (a1,idx) in zip(aa,iva) with (var agg = newSrcAggregator(XType)) {
-              agg.copy(a1,a2[idx]);
+            forall (a1,idx) in zip(aa,iva) {
+              a1 =a2[idx];
             }
             
             return try! "created " + st.attrib(rname);
@@ -189,9 +189,9 @@ module IndexingMsg
             ref ea = e.a;
             ref trutha = truth.a;
             ref aa = a.a;
-            forall (i, eai) in zip(ead, ea) with (var agg = newDstAggregator(XType)) {
+            forall (i, eai) in zip(ead, ea) {
               if (trutha[i] == true) {
-                agg.copy(aa[iv[i]-1], eai);
+                aa[iv[i]-1] = eai;
               }
             }
             return try! "created " + st.attrib(rname);
@@ -344,8 +344,8 @@ module IndexingMsg
             // [i in iv.a] e.a[i] = val;
             ref iva = iv.a;
             ref ea = e.a;
-            forall i in iva with (var agg = newDstAggregator(dtype)) {
-              agg.copy(ea[i],val);
+            forall i in iva {
+              ea[i] =val;
             }
             return try! "%s success".format(pn);
         }
@@ -368,9 +368,9 @@ module IndexingMsg
             ref ead = e.aD;
             ref ea = e.a;
             ref trutha = truth.a;
-            forall i in ead with (var agg = newDstAggregator(dtype)) {
+            forall i in ead {
               if (trutha[i] == true) {
-                agg.copy(ea[i],val);
+                ea[i] =val;
               }
             }
             var repMsg = "%s success".format(pn);
@@ -454,8 +454,8 @@ module IndexingMsg
             ref iva = iv.a;
             ref ya = y.a;
             ref ea = e.a;
-            forall (i,v) in zip(iva,ya) with (var agg = newDstAggregator(t)) {
-              agg.copy(ea[i],v);
+            forall (i,v) in zip(iva,ya) {
+              ea[i] =v;
             }
             return try! "%s success".format(pn);
         }
@@ -484,9 +484,9 @@ module IndexingMsg
             ref ead = e.aD;
             ref ea = e.a;
             ref trutha = truth.a;
-            forall (eai, i) in zip(ea, ead) with (var agg = newSrcAggregator(t)) {
+            forall (eai, i) in zip(ea, ead) {
               if (trutha[i] == true) {
-                agg.copy(eai,ya[iv[i]-1]);
+                eai =ya[iv[i]-1];
               }
             }
             var repMsg = "%s success".format(pn);

@@ -176,9 +176,9 @@ module CastMsg {
     const vname = st.nextName();
     var values = st.addEntry(vname, totBytes, uint(8));
     ref va = values.a;
-    forall (o, s) in zip(segments.a, strings) with (var agg = newDstAggregator(uint(8))) {
+    forall (o, s) in zip(segments.a, strings) {
       for (i, b) in zip(0.., s.bytes()) {
-        agg.copy(va[o+i], b);
+        va[o+i] = b;
       }
     }
 

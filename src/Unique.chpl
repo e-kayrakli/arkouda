@@ -478,21 +478,21 @@ module Unique
         }
         else {
             perm = radixSortLSD_ranks(a);
-            forall (p, s) in zip(perm, sorted) with (var agg = newSrcAggregator(int)) {
-                agg.copy(s, a[p]);
+            forall (p, s) in zip(perm, sorted) {
+                s = a[p];
             }
         }
         var (u, c) = uniqueFromSorted(sorted);
         var segs = (+ scan c) - c;
         var bcast: [aD] int;
-        forall s in segs with (var agg = newDstAggregator(int)) {
-            agg.copy(bcast[s], 1);
+        forall s in segs {
+            bcast[s] = 1;
         }
         bcast[0] = 0;
         bcast = (+ scan bcast);
         var inv: [aD] int;
-        forall (p, b) in zip(perm, bcast) with (var agg = newDstAggregator(int)) {
-            agg.copy(inv[p], b);
+        forall (p, b) in zip(perm, bcast) {
+            inv[p] = b;
         }
         return (u, c, inv);
     }
@@ -526,10 +526,10 @@ module Unique
         
         // segment position... 1-based needs to be converted to 0-based because of inclusive-scan
         // where ever a segment break (true value) is... that index is a segment start index
-        forall i in truth.domain with (var agg = newDstAggregator(int)) {
+        forall i in truth.domain {
           if (truth[i] == true) {
             var idx = i; 
-            agg.copy(segs[iv[i]-1], idx);
+            segs[iv[i]-1] = idx;
           }
         }
         // pull out the first key in each segment as a unique key
@@ -583,8 +583,8 @@ module Unique
           else {
             perm = radixSortLSD_ranks(hashes);
             // sorted = [i in perm] hashes[i];
-            forall (s, p) in zip(sorted, perm) with (var agg = newSrcAggregator(2*uint)) {
-              agg.copy(s, hashes[p]);
+            forall (s, p) in zip(sorted, perm) {
+              s = hashes[p];
             }
           }
           truth[0] = true;
@@ -640,13 +640,13 @@ module Unique
         if returnInverse {
             var segs = (+ scan c) - c;
             var bcast: [invD] int;
-            forall s in segs with (var agg = newDstAggregator(int)) {
-                agg.copy(bcast[s], 1);
+            forall s in segs {
+                bcast[s] = 1;
             }
             bcast[0] = 0;
             bcast = (+ scan bcast);
-            forall (p, b) in zip(perm, bcast) with (var agg = newDstAggregator(int)) {
-                agg.copy(inv[p], b);
+            forall (p, b) in zip(perm, bcast) {
+                inv[p] = b;
             }
         }
         return (uo, uv, c, inv);
@@ -676,16 +676,16 @@ module Unique
         
         // segment position... 1-based needs to be converted to 0-based because of inclusive-scan
         // where ever a segment break (true value) is... that index is a segment start index
-        forall i in aD with (var agg = newDstAggregator(int)) {
+        forall i in aD {
           if (truth[i] == true) {
             var idx = i;
-            agg.copy(segs[iv[i]-1], idx);
+            segs[iv[i]-1] = idx;
           }
         }
         // pull out the first key in each segment as a unique key
         // unique keys guaranteed to be sorted because keys are sorted
-        forall (u, s) in zip(uinds, segs) with (var agg = newSrcAggregator(int)) {
-          agg.copy(u, perm[s]); // uinds[i] = perm[segs[i]];
+        forall (u, s) in zip(uinds, segs) {
+          u = perm[s]; // uinds[i] = perm[segs[i]];
         }
         // Gather the unique offsets and values (byte buffers)
         var (uo, uv) = str[uinds];

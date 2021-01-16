@@ -157,11 +157,11 @@ module ConcatenateMsg
                         }
                       }
                     } else {
-                      forall (i, s) in zip(newSegs.domain, newSegs) with (var agg = newDstAggregator(int)) {
-                        agg.copy(esa[i+segStart], s);
+                      forall (i, s) in zip(newSegs.domain, newSegs) {
+                        esa[i+segStart] = s;
                       }
-                      forall (i, v) in zip(thisVals.aD, thisVals.a) with (var agg = newDstAggregator(uint(8))) {
-                        agg.copy(eva[i+valStart], v);
+                      forall (i, v) in zip(thisVals.aD, thisVals.a) {
+                        eva[i+valStart] = v;
                       }
                       segStart += thisSegs.size;
                       valStart += thisVals.size;
@@ -196,8 +196,8 @@ module ConcatenateMsg
                             } else {
                               ref ea = e.a;
                               // copy array into concatenation array
-                              forall (i, v) in zip(o.aD, o.a) with (var agg = newDstAggregator(int)) {
-                                agg.copy(ea[start+i], v);
+                              forall (i, v) in zip(o.aD, o.a) {
+                                ea[start+i] = v;
                               }
                               // update new start for next array copy
                               start += o.size;
@@ -225,8 +225,8 @@ module ConcatenateMsg
                             } else {
                               ref ea = e.a;
                               // copy array into concatenation array
-                              forall (i, v) in zip(o.aD, o.a) with (var agg = newDstAggregator(real)) {
-                                agg.copy(ea[start+i], v);
+                              forall (i, v) in zip(o.aD, o.a) {
+                                ea[start+i] = v;
                               }
                               // update new start for next array copy
                               start += o.size;
@@ -254,8 +254,8 @@ module ConcatenateMsg
                             } else {
                               ref ea = e.a;
                               // copy array into concatenation array
-                              forall (i, v) in zip(o.aD, o.a) with (var agg = newDstAggregator(bool)) {
-                                agg.copy(ea[start+i], v);
+                              forall (i, v) in zip(o.aD, o.a) {
+                                ea[start+i] = v;
                               }
                               // update new start for next array copy
                               start += o.size;

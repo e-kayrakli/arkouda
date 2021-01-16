@@ -41,9 +41,9 @@ module Indexing {
         var pop = iv[iv.size-1];
         var ret = makeDistArray(pop, int);
 
-        forall (i, eai) in zip(a.domain, a) with (var agg = newDstAggregator(int)) {
+        forall (i, eai) in zip(a.domain, a) {
           if (truth[i]) {
-            agg.copy(ret[iv[i]-1], eai);
+            ret[iv[i]-1] = eai;
           }
         }
         return ret;

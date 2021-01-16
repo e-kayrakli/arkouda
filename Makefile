@@ -24,6 +24,8 @@ endif
 CHPL_FLAGS += -smemTrack=true
 CHPL_FLAGS += -lhdf5 -lhdf5_hl -lzmq
 
+CHPL_FLAGS += --auto-aggregation --report-auto-aggregation
+
 # add-path: Append custom paths for non-system software.
 # Note: Darwin `ld` only supports `-rpath <path>`, not `-rpath=<paths>`.
 define add-path

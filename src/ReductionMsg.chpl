@@ -654,8 +654,8 @@ module ReductionMsg
 
     proc expandKeys(kD, segments: [?sD] int): [kD] int {
       var truth: [kD] bool;
-      forall i in segments with (var agg = newDstAggregator(bool)) {
-        agg.copy(truth[i], true);
+      forall i in segments {
+        truth[i] = true;
       }
       var keys = (+ scan truth) - 1;
       return keys;
@@ -675,18 +675,18 @@ module ReductionMsg
       /* Sort.TwoArrayRadixSort.twoArrayRadixSort(toSort); */
       var firstIV = radixSortLSD_ranks(values);
       var intermediate: [kD] int;
-      forall (ii, idx) in zip(intermediate, firstIV) with (var agg = newSrcAggregator(int)) {
-          agg.copy(ii, keys[idx]);
+      forall (ii, idx) in zip(intermediate, firstIV) {
+          ii = keys[idx];
       }
       var deltaIV = radixSortLSD_ranks(intermediate);
       var IV: [kD] int;
-      forall (IVi, idx) in zip(IV, deltaIV) with (var agg = newSrcAggregator(int)) {
-          agg.copy(IVi, firstIV[idx]);
+      forall (IVi, idx) in zip(IV, deltaIV) {
+          IVi = firstIV[idx];
       }
       var sortedKV: [kD] (int, int);
-      forall ((kvi0,kvi1), idx) in zip(sortedKV, IV) with (var agg = newSrcAggregator(int)) {
-        agg.copy(kvi0, keys[idx]);
-        agg.copy(kvi1, values[idx]);
+      forall ((kvi0,kvi1), idx) in zip(sortedKV, IV) {
+        kvi0 = keys[idx];
+        kvi1 = values[idx];
       }
       rmLogger.debug(getModuleName(),getRoutineName(),getLineNumber(),
                                            "sort time = %i".format(Time.getCurrentTime() - t1));
@@ -707,10 +707,10 @@ module ReductionMsg
       var hD: domain(1) dmapped Block(boundingBox={0..#pop}) = {0..#pop};
       // save off only the key from each pair (now there will be nunique of each key)
       var keyhits: [hD] int;
-      forall i in truth.domain with (var agg = newDstAggregator(int)) {
+      forall i in truth.domain {
         if (truth[i]) {
           var (key,_) = sortedKV[i];
-          agg.copy(keyhits[count[i]-1], key);
+          keyhits[count[i]-1] = key;
         }
       }
       rmLogger.debug(getModuleName(),getRoutineName(),getLineNumber(),
@@ -727,10 +727,10 @@ module ReductionMsg
       // get step indices and take diff to get number of times each key appears
       var stepInds: [nD] int;
       stepInds[nKeysPresent] = keyhits.size;
-      forall i in hD with (var agg = newDstAggregator(int)) {
+      forall i in hD {
         if (truth2[i]) {
           var idx = i;
-          agg.copy(stepInds[kiv[i]-1], idx);
+          stepInds[kiv[i]-1] = idx;
         }
       }
       var nunique = stepInds[1..#nKeysPresent] - stepInds[0..#nKeysPresent];

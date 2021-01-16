@@ -153,8 +153,8 @@ module In1d
         // Sort unique arrays together to find duplicates
         var order = radixSortLSD_ranks(ar);
         var sar: [D] int;
-        forall (s, o) in zip(sar, order) with (var agg = newSrcAggregator(int)) {
-            agg.copy(s, ar[o]);
+        forall (s, o) in zip(sar, order) {
+            s = ar[o];
         }
         // Duplicates correspond to values in both arrays
         var flag: [D] bool;
@@ -162,13 +162,13 @@ module In1d
         // Get the indices of values from u1 that are also in u2
         // Because sort is stable, original index of left duplicate will always be in u1
         var ret: [D] bool;
-        forall (o, f) in zip(order, flag) with (var agg = newDstAggregator(bool)) {
-            agg.copy(ret[o], f);
+        forall (o, f) in zip(order, flag) {
+            ret[o] = f;
         }
         // Use the inverse index to map from u1 domain to ar1 domain
         var truth: [aD1] bool;
-        forall (t, idx) in zip(truth, inv) with (var agg = newSrcAggregator(bool)) {
-            agg.copy(t, ret[idx]);
+        forall (t, idx) in zip(truth, inv) {
+            t = ret[idx];
         }
         return truth;
     }

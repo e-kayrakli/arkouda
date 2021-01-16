@@ -52,12 +52,11 @@ module SegStringSort {
     var longLocs = + scan isLong;
     locs -= longLocs;
     var gatherInds: [ss.offsets.aD] int;
-    forall (i, l, ll, t) in zip(ss.offsets.aD, locs, longLocs, isLong) 
-      with (var agg = newDstAggregator(int)) {
+    forall (i, l, ll, t) in zip(ss.offsets.aD, locs, longLocs, isLong) {
       if !t {
-        agg.copy(gatherInds[l], i);
+        gatherInds[l] = i;
       } else {
-        agg.copy(gatherInds[longStart+ll-1], i);
+        gatherInds[longStart+ll-1] = i;
       }
     }
     ssLogger.debug(getModuleName(),getRoutineName(),getLineNumber(),
@@ -80,9 +79,9 @@ module SegStringSort {
                              "Sorted long strings in %t seconds".format(getCurrentTime() - tl));
       if v { tl = getCurrentTime(); }
 
-      forall (h, s) in zip(highDom, stringsWithInds.domain) with (var agg = newDstAggregator(int)) {
+      forall (h, s) in zip(highDom, stringsWithInds.domain) {
         const (_,val) = stringsWithInds[s];
-        agg.copy(gatherInds[h], val);
+        gatherInds[h] = val;
       }
       ssLogger.debug(getModuleName(),getRoutineName(),getLineNumber(),
                               "Permuted long inds in %t seconds".format(getCurrentTime() - tl));
