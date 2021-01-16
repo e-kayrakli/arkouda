@@ -53,6 +53,7 @@ module SegStringSort {
     locs -= longLocs;
     var gatherInds: [ss.offsets.aD] int;
     forall (i, l, ll, t) in zip(ss.offsets.aD, locs, longLocs, isLong) {
+
       if !t {
         gatherInds[l] = i;
       } else {
