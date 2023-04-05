@@ -1502,8 +1502,8 @@ module SegmentedString {
                        borrow=false);
   }
 
-  proc interpretAs(type t, bytearray: [?D] uint(8), region: range(?),
-                   borrow=false): t where t==string || t==bytes {
+  private proc interpretAs(type t, bytearray: [?D] uint(8), region: range(?),
+                           borrow=false): t where t==string || t==bytes {
 
     var localSlice = new lowLevelLocalizingSlice(bytearray, region);
     // Byte buffer is null-terminated, so length is region.size - 1
