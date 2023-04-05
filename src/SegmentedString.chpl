@@ -1490,40 +1490,36 @@ module SegmentedString {
      (reduces memory allocations if the string isn't needed after array)
    */
   proc interpretAsString(bytearray: [?D] uint(8), region: range(?), borrow=false): string {
-    var localSlice = new lowLevelLocalizingSlice(bytearray, region);
-    // Byte buffer is null-terminated, so length is region.size - 1
-    try {
-      if localSlice.isOwned {
-        localSlice.isOwned = false;
-        return createStringWithOwnedBuffer(localSlice.ptr, region.size-1, region.size);
-      } else if borrow {
-        return createStringWithBorrowedBuffer(localSlice.ptr, region.size-1, region.size);
-      } else {
-        return createStringWithNewBuffer(localSlice.ptr, region.size-1, region.size);
-      }
-    } catch {
-      return "<error interpreting bytes as string>";
-    }
+    return interpretAs(bytes, bytearray: [?D] uint(8), region: range(?),
+                       borrow=false);
   }
 
   /*
      Interpret a region of a byte array as bytes. Modeled after interpretAsString
    */
   proc interpretAsBytes(bytearray: [?D] uint(8), region: range(?), borrow=false): bytes {
+    return interpretAs(bytes, bytearray: [?D] uint(8), region: range(?),
+                       borrow=false);
+  }
+
+  proc interpretAs(type t, bytearray: [?D] uint(8), region: range(?),
+                   borrow=false): t where t==string || t==bytes {
+
     var localSlice = new lowLevelLocalizingSlice(bytearray, region);
     // Byte buffer is null-terminated, so length is region.size - 1
     try {
       if localSlice.isOwned {
         localSlice.isOwned = false;
-        return createBytesWithOwnedBuffer(localSlice.ptr, region.size-1, region.size);
+        return t.createWithOwnedBuffer(localSlice.ptr, region.size-1, region.size);
       } else if borrow {
-        return createBytesWithBorrowedBuffer(localSlice.ptr, region.size-1, region.size);
+        return t.createWithBorrowedBuffer(localSlice.ptr, region.size-1, region.size);
       } else {
-        return createBytesWithNewBuffer(localSlice.ptr, region.size-1, region.size);
+        return t.createWithNewBuffer(localSlice.ptr, region.size-1, region.size);
       }
     } catch {
-      return b"<error interpreting uint(8) as bytes>";
+      return b"<error interpreting uint(8) as %s>".format(t:string);
     }
+
   }
 
 }
