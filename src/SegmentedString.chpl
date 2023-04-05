@@ -1504,22 +1504,23 @@ module SegmentedString {
 
   private proc interpretAs(type t, bytearray: [?D] uint(8), region: range(?),
                            borrow=false): t where t==string || t==bytes {
-
     var localSlice = new lowLevelLocalizingSlice(bytearray, region);
     // Byte buffer is null-terminated, so length is region.size - 1
+    const policy;
+    if localSlice.isOwned {
+      localSlice.isOwned = false;
+      policy = bufferCopyPolicy.own;
+    } else if borrow {
+      policy = bufferCopyPolicy.borrow;
+    } else {
+      policy = bufferCopyPolicy.create;
+    }
     try {
-      if localSlice.isOwned {
-        localSlice.isOwned = false;
-        return t.createWithOwnedBuffer(localSlice.ptr, region.size-1, region.size);
-      } else if borrow {
-        return t.createWithBorrowedBuffer(localSlice.ptr, region.size-1, region.size);
-      } else {
-        return t.createWithNewBuffer(localSlice.ptr, region.size-1, region.size);
-      }
+      return new t(localSlice.ptr, region.size-1, region.size,
+                   bufferCopyPolicy=policy);
     } catch {
       return b"<error interpreting uint(8) as %s>".format(t:string);
     }
-
   }
 
 }
