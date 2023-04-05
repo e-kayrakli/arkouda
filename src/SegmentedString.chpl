@@ -1490,7 +1490,7 @@ module SegmentedString {
      (reduces memory allocations if the string isn't needed after array)
    */
   proc interpretAsString(bytearray: [?D] uint(8), region: range(?), borrow=false): string {
-    return interpretAs(bytes, bytearray: [?D] uint(8), region: range(?),
+    return interpretAs(string, bytearray: [?D] uint(8), region: range(?),
                        borrow=false);
   }
 
