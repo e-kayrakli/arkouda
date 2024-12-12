@@ -1815,7 +1815,8 @@ def histogram(pda: pdarray, bins: int_scalars = 10) -> Tuple[pdarray, pdarray]:
     if bins < 1:
         raise ValueError("bins must be 1 or greater")
     b = linspace(pda.min(), pda.max(), bins + 1)
-    repMsg = generic_msg(cmd="histogram", args={"array": pda, "bins": bins})
+    cmd = f"histogram<{pda.dtype},{pda.ndim}>"
+    repMsg = generic_msg(cmd=cmd, args={"a": pda, "bins": bins})
     return create_pdarray(type_cast(str, repMsg)), b
 
 
