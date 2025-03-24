@@ -483,15 +483,11 @@ class pdarray:
     @property
     def max_bits(self):
         if self.dtype == bigint:
-            if self.ndim == 1:
-                if not hasattr(self, "_max_bits"):
-                    # if _max_bits hasn't been set, fetch value from server
-                    self._max_bits = generic_msg(cmd="get_max_bits", args={"array": self})
-                return int(self._max_bits)
-            else:
-                raise ValueError(
-                    f"max_bits cannot currently be fetched for {self.ndim}D pdarrays"
-                )
+            if not hasattr(self, "_max_bits"):
+                # if _max_bits hasn't been set, fetch value from server
+                cmd=f"get_max_bits<{self.dtype},{self.ndim}>"
+                self._max_bits = generic_msg(cmd=cmd, args={"array": self})
+            return int(self._max_bits)
         return None
 
     @max_bits.setter

@@ -92,23 +92,20 @@ module BigIntMsg {
         }
     }
 
-    proc getMaxBitsMsg(cmd: string, msgArgs: borrowed MessageArgs, st: borrowed SymTab): MsgTuple throws {
-        param pn = Reflection.getRoutineName();
-        const name = msgArgs.getValueOf("array");
-        var gEnt: borrowed GenSymEntry = getGenericTypedArrayEntry(name, st);
+    @arkouda.instantiateAndRegister("get_max_bits")
+    proc getMaxBitsMsg(cmd: string, msgArgs: borrowed MessageArgs,
+                       st: borrowed SymTab, type array_dtype,
+                       param array_nd: int): MsgTuple throws
+        where (array_dtype == BigInteger.bigint) {
 
-        select gEnt.dtype {
-            when DType.BigInt {
-                var repMsg = formatJson(toSymEntry(gEnt, bigint).max_bits);
-                biLogger.debug(getModuleName(), getRoutineName(), getLineNumber(), repMsg);
-                return new MsgTuple(repMsg, MsgType.NORMAL);
-            }
-            otherwise {
-                var errorMsg = notImplementedError(pn, "("+dtype2str(gEnt.dtype)+")");
-                biLogger.error(getModuleName(),getRoutineName(),getLineNumber(),errorMsg);
-                return new MsgTuple(errorMsg, MsgType.ERROR);
-            }
-        }
+      param pn = Reflection.getRoutineName();
+      const name = msgArgs.getValueOf("array");
+
+      var entry = st[msgArgs["array"]]: SymEntry(array_dtype, array_nd);
+      var repMsg = formatJson(entry.max_bits);
+      biLogger.debug(getModuleName(), getRoutineName(), getLineNumber(), repMsg);
+      return new MsgTuple(repMsg, MsgType.NORMAL);
+
     }
 
     proc setMaxBitsMsg(cmd: string, msgArgs: borrowed MessageArgs, st: borrowed SymTab): MsgTuple throws {
@@ -147,6 +144,5 @@ module BigIntMsg {
     use CommandMap;
     registerFunction("big_int_creation", bigIntCreationMsg, getModuleName());
     registerFunction("bigint_to_uint_list", bigintToUintArraysMsg, getModuleName());
-    registerFunction("get_max_bits", getMaxBitsMsg, getModuleName());
     registerFunction("set_max_bits", setMaxBitsMsg, getModuleName());
 }

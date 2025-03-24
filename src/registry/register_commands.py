@@ -5,7 +5,7 @@ from enum import Enum
 
 import chapel
 
-DEFAULT_MODS = ["MsgProcessing", "GenSymIO"]
+DEFAULT_MODS = ["MsgProcessing", "GenSymIO", "BigIntMsg"]
 
 registerAttr = ("arkouda.registerCommand", ["name", "ignoreWhereClause"])
 instAndRegisterAttr = ("arkouda.instantiateAndRegister", ["prefix"])
